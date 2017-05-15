@@ -1,0 +1,25 @@
+﻿@charset "UTF-8";
+
+@import "./_pc_reset.scss";
+
+html, body{
+	height: 100%;
+}
+
+/**
+ * {{}}vue表达式未渲染完成隐藏
+ */
+[v-cloak]{
+	display: none;
+}
+
+/**
+ * {{}}vue transition设置
+ */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
