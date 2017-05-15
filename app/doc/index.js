@@ -6,8 +6,8 @@ import VueResource from 'vue-resource'
 import sideLeftNav from './components/sideLeftNav.vue'
 import mainContent from './components/mainContent.vue'
 import {checkType, sessionPosition, unqie} from './utils/util'
+import {data} from './mock/data.js'
 import initLeanCloud from './utils/initLeanCloud'
-
 
 // HMR interface
 if(module.hot) {
@@ -51,21 +51,26 @@ window.response = ''
 
 // 声明类型
 let DataTypeDoc = AV.Object.extend('DataTypeDoc');
-// 新建对象
-let dataTypeDoc = new DataTypeDoc();
-// 设置名称
-dataTypeDoc.set('cateTitle','TOOL');
-// 设置优先级
-dataTypeDoc.set('title','vue文档11');
-dataTypeDoc.set('detail','vue文档');
-dataTypeDoc.set("image", "xx.jpg");
-dataTypeDoc.set('link','https://github.com/pfan123/mobile-web-favorites');
-// dataTypeDoc.save().then(function (todo) {
-//   console.log('objectId is ' + todo);
-// }, function (error) {
-//   console.error(error);
-// });
 
+let objects = []
+data.map( (item) => {
+  var dataTypeDoc = new DataTypeDoc();
+  // 设置名称
+  dataTypeDoc.set('cateTitle', item.cateTitle);
+  // 设置优先级
+  dataTypeDoc.set('title', item.title);
+  dataTypeDoc.set('detail', item.detail);
+  dataTypeDoc.set("image", item.image);
+  dataTypeDoc.set('link', item.link);
+  objects.push(dataTypeDoc)
+} )
+ // 批量创建（更新）
+// AV.Object.saveAll(objects).then(function (objects) {
+//   // 成功
+//   console.log("批量添加成功")
+// }, function (error) {
+//   // 异常处理
+// });
 
 let query = new AV.Query('DataTypeDoc');
 query.ascending('createdAt');

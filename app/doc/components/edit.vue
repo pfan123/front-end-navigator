@@ -1,6 +1,6 @@
 <template>
   <div class="admin_edit">
-     <header class="admin_edit_hd">前端导航平台--管理后台<a href="/index.html" class="admin_go_index">回到首页</a><a href="javascript:;" class="admin_edit_add" @click="addItemData">添加</a></header>  
+     <header class="admin_edit_hd">前端导航平台--管理后台<a href="/" class="admin_go_index">回到首页</a><a href="javascript:;" class="admin_edit_add" @click="addItemData">添加</a></header>  
 
     <div class="admin_edit_item" v-for="item in list">
         <h3 v-cloak class="admin_cate-tit"><span>{{item.cateTitle}}</span> <a href="javascript:;" @click="editCateTitle(item.cateTitle, cateArr)">编辑</a><a href="javascript:;" @click="delCateTitle(item.cateTitle)">删除</a></h3>

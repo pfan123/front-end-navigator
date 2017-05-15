@@ -6,7 +6,7 @@
           <a :class="{on: index == active}" href="javascript:;"  @click= "selectTab(index)">{{item.cateTitle}}</a>
         </template>
       </div>
-      <a class="sideleft_navbot" href="//github.com/pfan123" target="_blank"><i></i>关于作者</a>
+      <a class="sideleft_navbot" href="//github.com/pfan123/front-end-navigator" target="_blank"><i></i>关于作者</a>
   </div>
 </template>
 

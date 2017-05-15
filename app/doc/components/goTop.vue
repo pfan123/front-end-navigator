@@ -59,7 +59,6 @@ export default {
     color: #fff;
     line-height: 18px;
     z-index: 4;
-    display: none; 
     img{
       display: block;
       width: 18px;

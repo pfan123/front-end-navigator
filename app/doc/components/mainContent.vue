@@ -39,7 +39,8 @@ export default {
       isShow: false,
       timer: "",
       isback: false,
-      isFloatingShow: true
+      isFloatingShow: true,
+      setTimer: ''      
     }
   },
   components: {
@@ -94,6 +95,7 @@ export default {
     middleVue.$on('change-tab', (id) => {
       let dis 
       clearInterval(self.timer)
+      clearInterval(self.setTimer)
       
       if(self.$refs.scrollDom.scrollTop - self.$refs.tabDivs[id].offsetTop !== 0){
         dis = Math.abs(self.$refs.scrollDom.scrollTop - self.$refs.tabDivs[id].offsetTop) / 20
@@ -119,6 +121,10 @@ export default {
 
           }, 1000/60)             
         }
+
+        self.setTimer = setTimeout( () => {
+          clearInterval(self.timer)
+        }, 1000/3)        
      
       }
 
@@ -185,7 +191,7 @@ export default {
 
 .main_content—section{
     overflow: hidden;
-    padding: 10px 10px 10px 30px;
+    padding: 20px 10px 10px 30px;
     h2{
       position: relative;
       font-size: 12px;
