@@ -59,6 +59,7 @@ export default {
 
     let query = new AV.Query('DataTypeDoc')
     query.ascending('createdAt')
+    query.limit(1000) 
     query.find().then(function (json) {
          json = JSON.parse( JSON.stringify(json, null, 4) )
          self.totalData = json

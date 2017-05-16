@@ -6,7 +6,7 @@ import VueResource from 'vue-resource'
 import sideLeftNav from './components/sideLeftNav.vue'
 import mainContent from './components/mainContent.vue'
 import {checkType, sessionPosition, unqie} from './utils/util'
-import {data} from './mock/data.js'
+// import {data} from './mock/data.js'
 import initLeanCloud from './utils/initLeanCloud'
 
 // HMR interface
@@ -53,6 +53,9 @@ window.response = ''
 let DataTypeDoc = AV.Object.extend('DataTypeDoc');
 
 let objects = []
+
+let data = []
+
 data.map( (item) => {
   var dataTypeDoc = new DataTypeDoc();
   // 设置名称
@@ -72,8 +75,9 @@ data.map( (item) => {
 //   // 异常处理
 // });
 
-let query = new AV.Query('DataTypeDoc');
-query.ascending('createdAt');
+let query = new AV.Query('DataTypeDoc')
+query.ascending('createdAt')
+query.limit(1000)  //查询数据默认设置100条
 query.find().then(function (json) {
      json = JSON.parse( JSON.stringify(json, null, 4) )
 
@@ -101,7 +105,7 @@ query.find().then(function (json) {
 	    	}
 	    })     	
      })
-
+console.log(cateArr);
      // console.log(docData)
      window.response = docData
   }).catch(function(error) {
