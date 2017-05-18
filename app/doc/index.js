@@ -2,6 +2,9 @@
 import styles from "./sass/style.s.scss"
 // require('./sass/style.s.scss')
 import Vue from 'vue'
+import axios from 'axios'
+//https://github.com/imcvampire/vue-axios
+import VueAxios from 'vue-axios'
 import AV from 'av'
 import VueResource from 'vue-resource'
 import sideLeftNav from './components/sideLeftNav.vue'
@@ -16,7 +19,8 @@ if(module.hot) {
   module.hot.accept()
 }
 
-Vue.use(VueResource)
+// Vue.use(VueResource)
+Vue.use(VueAxios, axios)
 // console.log(styles)
 
 window.middleVue = new Vue()
@@ -53,6 +57,10 @@ window.response = ''
 // Vue.http.get('/api/index', '').then( (response) => {
 // 	window.response = response.data.list
 // }, (e)=>{ throw e})
+
+Vue.axios.get('/api/index').then((response) => {
+  console.log(response.data)
+})
 
 // 声明类型
 let DataTypeDoc = AV.Object.extend('DataTypeDoc');

@@ -46,7 +46,6 @@
 - 前端导航平台
 
 
-
 ## 参考案例
 
 [腾讯前端导航](http://www.alloyteam.com/nav/)
@@ -55,6 +54,10 @@
 
 [前端网址导航-haorooms导航](http://www.haorooms.com/nav)
 
+## webpack 参考文章
+
+[基于webpack搭建前端工程解决方案探索](https://github.com/chemdemo/chemdemo.github.io/issues/10)
+[【翻译】Webpack——令人困惑的地方](https://github.com/chemdemo/chemdemo.github.io/issues/13)
 
 
 ## License
