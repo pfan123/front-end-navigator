@@ -14,7 +14,7 @@
 </head>
 
     <!-- S 左侧导航内容 -->
-    <header vm-mod = "sideLeftNav"></header>
+    <div vm-mod = "sideLeftNav"></div>
     <!-- E 左侧导航内容 -->
 
     <!-- S 主内容 -->

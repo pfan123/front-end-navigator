@@ -2,6 +2,7 @@
 import styles from "./sass/style.s.scss"
 // require('./sass/style.s.scss')
 import Vue from 'vue'
+import AV from 'av'
 import VueResource from 'vue-resource'
 import sideLeftNav from './components/sideLeftNav.vue'
 import mainContent from './components/mainContent.vue'
@@ -30,6 +31,10 @@ const vmHeader = new Vue({
  	// 	console.log(createElement('p', 'hi1'))
   //     return createElement('p', 'hi1')
   //   }))
+ },
+
+ created: () => {
+  console.log("开始创建")
  }
 })
 
@@ -105,7 +110,7 @@ query.find().then(function (json) {
 	    	}
 	    })     	
      })
-console.log(cateArr);
+
      // console.log(docData)
      window.response = docData
   }).catch(function(error) {

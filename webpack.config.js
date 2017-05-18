@@ -73,9 +73,7 @@ function getEntries(globPath) {
 
 const entries = getEntries([APP_PATH+'/*.js'])
 
-// console.log(entries)
 module.exports = {
-  // context: path.resolve(__dirname, "app"),
   entry: entries,
 
   output: {
@@ -87,7 +85,7 @@ module.exports = {
     chunkFilename: "[id].chunk.js"
   },
 
-   module: {
+  module: {
     rules: [
       {
         test: /\.vue$/,
@@ -109,7 +107,7 @@ module.exports = {
       },    
       {
         test: /\.js$/,
-        loader: 'babel-loader',
+        loader: 'babel-loader?cacheDirectory',
         exclude: /node_modules/,  //排除node_modules文件夹
         options: {
           presets: ['es2015']
@@ -157,12 +155,34 @@ module.exports = {
     ]
    },
 
+   //页面已经cdn加载，则不需要打包到chunk
+   externals: {
+     "av": "AV"
+   },
+
+   resolve: {
+    alias: {
+      '@font': "",
+      '@img': "../images"
+    },
+    modules: [path.resolve(__dirname, "node_modules")]
+
+   },
+
+
    plugins: [
       // 开启全局的模块热替换(HMR)
       new webpack.HotModuleReplacementPlugin(),
       
       // 当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
       new webpack.NamedModulesPlugin(),
+
+      //https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks#webpackconfigjs
+      new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
+          chunks: Object.keys(entries),
+          minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
+      })
       
       // //静态资源分割存储
       // new staticToBuild({
@@ -198,7 +218,7 @@ module.exports = {
         let targetJSPath = req.path.replace(/\.(shtml|html)/, '.js')
 
         res.set('Content-Type', 'text/html')
-        let content = fs.readFileSync(targetPath, 'utf8')+'<script src=".' + targetJSPath + '"></script>'+'<script src="http://' + getLocalIP() + ':9999/webpack-dev-server.js"></script>'
+        let content = fs.readFileSync(targetPath, 'utf8')+'<script src="./vendors.js"></script><script src=".' + targetJSPath + '"></script>'+'<script src="http://' + getLocalIP() + ':9999/webpack-dev-server.js"></script>'
         res.send(content);
 
       })  
@@ -284,7 +304,7 @@ if (process.env.NODE_ENV === 'production') {
               name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
             }              
           },
-          "css-loader",
+          "css-loader?minimize",
           "postcss-loader",
           "sass-loader"
         ],
@@ -301,7 +321,7 @@ if (process.env.NODE_ENV === 'production') {
           filename: name + '.html',
           template: path.join(APP_PATH, name+'.shtml'),
           inject: true,
-          chunks: [name],
+          chunks: ["vendors", name],
           minify: {
             removeComments: true,
             collapseWhitespace: true,
