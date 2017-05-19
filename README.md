@@ -63,4 +63,3 @@
 ## License
 
 This content is released under the [MIT](http://opensource.org/licenses/MIT)  License.
-前端导航站，收集前端业内优秀技术博客、框架，方便快速进入

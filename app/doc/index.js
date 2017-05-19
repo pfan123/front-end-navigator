@@ -20,8 +20,7 @@ if(module.hot) {
 }
 
 // Vue.use(VueResource)
-Vue.use(VueAxios, axios)
-// console.log(styles)
+// Vue.use(VueAxios, axios)
 
 window.middleVue = new Vue()
 
@@ -49,7 +48,6 @@ const vmMain = new Vue({
  }
 }).$mount('[vm-mod="mainContent"]')
 
-console.log(new checkType().isArray([1,2]))
 
 window.response = ''
 
@@ -58,9 +56,9 @@ window.response = ''
 // 	window.response = response.data.list
 // }, (e)=>{ throw e})
 
-Vue.axios.get('/api/index').then((response) => {
-  console.log(response.data)
-})
+// Vue.axios.get('/api/index').then((response) => {
+//   console.log(response.data)
+// })
 
 // 声明类型
 let DataTypeDoc = AV.Object.extend('DataTypeDoc');

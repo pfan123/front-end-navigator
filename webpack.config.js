@@ -286,6 +286,7 @@ if (process.env.NODE_ENV === 'production') {
         warnings: false
       }
     })
+    // new webpack.optimize.OccurenceOrderPlugin(),
 
     // new webpack.LoaderOptionsPlugin({
     //   minimize: true
@@ -321,6 +322,7 @@ if (process.env.NODE_ENV === 'production') {
           template: path.join(APP_PATH, name+'.shtml'),
           inject: true,
           chunks: ["vendors", name],
+          showErrors: true,
           minify: {
             removeComments: true,
             collapseWhitespace: true,
