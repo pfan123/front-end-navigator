@@ -48,7 +48,10 @@
 ## 技术实践文章
 
 [webpack简介与使用](./webpack简介与使用.md)
+
 [从 webpack v1 迁移到 webpack v2 新特性](./webpack2新特性.md)
+
+[webpack2 使用优化](https://github.com/gwuhaolin/blog/issues/2)
 
 
 ## 参考案例
