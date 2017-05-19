@@ -15,6 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const staticToBuild = require('./lib/staticToBuild')
+const ImageminPlugin = require('imagemin-webpack-plugin').default
 
 console.log(__dirname)
 
@@ -193,7 +194,14 @@ module.exports = {
           name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
           chunks: Object.keys(entries),
           minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
-      })
+      }),
+
+      new ImageminPlugin({
+        disable: process.env.NODE_ENV !== 'production', // Disable during development
+        pngquant: {
+          quality: '95-100'
+        }
+      })      
       
       // //静态资源分割存储
       // new staticToBuild({
@@ -292,12 +300,13 @@ if (process.env.NODE_ENV === 'production') {
     new ExtractTextPlugin( './css/[name].css'),
 
     new webpack.optimize.UglifyJsPlugin({
-      // sourceMap: true,
+      compress: true,
+      beautify: false,
+      sourceMap: false,
       compress: {
         warnings: false
       }
     })
-    // new webpack.optimize.OccurenceOrderPlugin(),
 
     // new webpack.LoaderOptionsPlugin({
     //   minimize: true

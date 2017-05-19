@@ -276,6 +276,37 @@ server.listen(8080);
 
 > ps：要使HMR功能生效，就是要在应用热替换的模块或者根模块里面加入允许热替换的代码。否则，热替换不会生效，还是会重刷整个页面。下面是摘自webpack在github上docs的原话：
 
+
+ps: 注意 webpack-dev-server 输出日志
+
+```
+//webpack-dev-server.js输出信息，可以发现
+//contentBase存在，都会打印日志 Content not from webpack is served from
+//webpack output is served from信息取自 output.publicPath 路径
+
+function reportReadiness(uri, options) {
+  const useColor = argv.color;
+  let startSentence = `Project is running at ${colorInfo(useColor, uri)}`
+  if(options.socket) {
+    startSentence = `Listening to socket at ${colorInfo(useColor, options.socket)}`;
+  }
+  console.log((argv["progress"] ? "\n" : "") + startSentence);
+
+  console.log(`webpack output is served from ${colorInfo(useColor, options.publicPath)}`);
+  const contentBase = Array.isArray(options.contentBase) ? options.contentBase.join(", ") : options.contentBase;
+  if(contentBase)
+    console.log(`Content not from webpack is served from ${colorInfo(useColor, contentBase)}`);
+  if(options.historyApiFallback)
+    console.log(`404s will fallback to ${colorInfo(useColor, options.historyApiFallback.index || "/index.html")}`);
+  if(options.open) {
+    open(uri).catch(function() {
+      console.log("Unable to open browser. If you are running in a headless environment, please do not use the open flag.");
+    });
+  }
+}
+```
+
+
 [WEBPACK DEV SERVER](https://webpack.github.io/docs/webpack-dev-server.html)
 
 [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html)
