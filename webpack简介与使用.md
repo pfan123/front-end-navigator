@@ -272,6 +272,17 @@ server.listen(8080);
 > ps：要使HMR功能生效，就是要在应用热替换的模块或者根模块里面加入允许热替换的代码。否则，热替换不会生效，还是会重刷整个页面。下面是摘自webpack在github上docs的原话：
 
 [WEBPACK DEV SERVER](https://webpack.github.io/docs/webpack-dev-server.html)
+
 [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html)
+
+[Hot Module Replacement 介绍](https://cupools.github.io/2016/07010/)
+
+[Hot Module Replacement](https://survivejs.com/webpack/appendices/hmr/)
+
 [如何写好.babelrc？Babel的presets和plugins配置解析](https://zhuanlan.zhihu.com/p/24224107)
+
 [webpack2异步加载套路](https://segmentfault.com/a/1190000008279471)
+
+[基于webpack搭建前端工程解决方案探索](https://github.com/chemdemo/chemdemo.github.io/issues/10)
+
+[【翻译】Webpack——令人困惑的地方](https://github.com/chemdemo/chemdemo.github.io/issues/13)

@@ -12,7 +12,7 @@
 
 - 1.构建webpack2.0多页面应用 
 - 2.vue2数据渲染，实践父、子组件通信，组件与组件之间通信
-- 3.vue-router2实现控制管理页面路由
+- 3.vue-router2、axios实现控制管理页面路由
 - 4.leancloud数据云存储
 - 5.Mockjs开发过程中模拟测试数据
 
@@ -54,10 +54,10 @@
 
 [前端网址导航-haorooms导航](http://www.haorooms.com/nav)
 
-## webpack 参考文章
+## 技术实践文章
 
-[基于webpack搭建前端工程解决方案探索](https://github.com/chemdemo/chemdemo.github.io/issues/10)
-[【翻译】Webpack——令人困惑的地方](https://github.com/chemdemo/chemdemo.github.io/issues/13)
+[webpack简介与使用](./webpack简介与使用.md)
+
 
 
 ## License
