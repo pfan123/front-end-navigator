@@ -88,6 +88,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        enforce: "pre",  //module.preLoaders的替代方案
+        loader: "eslint-loader", //https://github.com/MoOx/eslint-loader
+        include: [
+          APP_PATH
+        ]            
+      },    
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -111,7 +119,10 @@ module.exports = {
         exclude: /node_modules/,  //排除node_modules文件夹
         options: {
           presets: ['es2015']
-        }
+        },
+        include: [
+          APP_PATH
+        ]        
       },
       {
         test: /\.json$/,

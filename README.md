@@ -45,6 +45,11 @@
 - 前端面试资料
 - 前端导航平台
 
+## 技术实践文章
+
+[webpack简介与使用](./webpack简介与使用.md)
+[从 webpack v1 迁移到 webpack v2 新特性](./webpack2新特性.md)
+
 
 ## 参考案例
 
@@ -53,11 +58,6 @@
 [圈子](https://luuman.github.io/FrontEndGuide/V1/index.html#page_9)
 
 [前端网址导航-haorooms导航](http://www.haorooms.com/nav)
-
-## 技术实践文章
-
-[webpack简介与使用](./webpack简介与使用.md)
-
 
 
 ## License

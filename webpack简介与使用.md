@@ -146,12 +146,17 @@ plugins: [
 ```
 常用插件：
 
-HotModuleReplacementPlugin --开启全局的模块热替换(HMR)
-NamedModulesPlugin --当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
-[CommonsChunkPlugin](https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks#webpackconfigjs) --提取chunk公共部分
-[ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) --独立生成css文件，以外链的形式加载
-[UglifyJsPlugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin) --压缩js
-[HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin) --使用模版生成html
+- HotModuleReplacementPlugin --开启全局的模块热替换(HMR)
+
+- NamedModulesPlugin --当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
+
+- [CommonsChunkPlugin](https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks#webpackconfigjs) --提取chunk公共部分
+
+- [ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) --独立生成css文件，以外链的形式加载
+
+- [UglifyJsPlugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin) --压缩js
+
+- [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin) --使用模版生成html
 
 ###### externals
 防止将某些 import 的包(package)打包到 bundle 中，而是在运行时(runtime)再去从外部获取这些扩展依赖(external dependencies)。
