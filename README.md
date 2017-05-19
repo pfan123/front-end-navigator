@@ -55,6 +55,8 @@
 
 [webpack插件开发](./webpack插件开发.md)
 
+[vue数据更新， 视图未更新](https://github.com/pfan123/front-end-navigator/issues/1)
+
 
 ## 参考案例
 
