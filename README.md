@@ -53,6 +53,8 @@
 
 [webpack2 使用优化](https://github.com/gwuhaolin/blog/issues/2)
 
+[webpack插件开发](./webpack插件开发.md)
+
 
 ## 参考案例
 
