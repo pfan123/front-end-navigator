@@ -48,7 +48,6 @@ const vmMain = new Vue({
  }
 }).$mount('[vm-mod="mainContent"]')
 
-
 window.response = ''
 
 // vue-resource https://etianqq.gitbooks.io/vue2/content/chapter2-vue-resource/api.html

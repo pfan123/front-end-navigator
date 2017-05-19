@@ -218,7 +218,7 @@ module.exports = {
         let targetJSPath = req.path.replace(/\.(shtml|html)/, '.js')
 
         res.set('Content-Type', 'text/html')
-        let content = fs.readFileSync(targetPath, 'utf8')+'<script src="./vendors.js"></script><script src=".' + targetJSPath + '"></script>'+'<script src="http://' + getLocalIP() + ':9999/webpack-dev-server.js"></script>'
+        let content = fs.readFileSync(targetPath, 'utf8')+'<script src="./vendors.js"></script><script src=".' + targetJSPath + '"></script>'
         res.send(content);
 
       })  
