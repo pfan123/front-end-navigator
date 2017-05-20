@@ -57,6 +57,8 @@
 
 [vue数据更新， 视图未更新](https://github.com/pfan123/front-end-navigator/issues/1)
 
+[Vue 2.0组件通信](https://vuefe.cn/v2/guide/components.html#构成组件)
+
 
 ## 参考案例
 
