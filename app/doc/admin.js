@@ -1,3 +1,4 @@
+import styles from "./sass/style.s.scss"
 import Vue from 'vue'
 import AV from 'av'
 import VueRouter from 'vue-router'
@@ -13,8 +14,6 @@ if(module.hot) {
   // Capture hot update
   module.hot.accept()
 }
-
-require('./sass/style.s.scss')
 
 Vue.use(VueRouter)
 
@@ -48,8 +47,8 @@ new Vue({
 }).$mount("#app")
 
 // 该语句应该只声明一次
-let username = "admin"
-let password = "admin2243012345"
+let username = "xx"
+let password = "xxx"
 
 let user = new AV.User()
 user.setUsername(username)

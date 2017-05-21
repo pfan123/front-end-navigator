@@ -93,6 +93,7 @@ export default {
             // 修改属性
             dataTypeDoc.set('title', title)
             dataTypeDoc.set('detail', detail)
+            dataTypeDoc.set('link', link)
 
             dataTypeDoc.save().then(function (dataTypeDoc) {
               self.formInfo.isShow = false

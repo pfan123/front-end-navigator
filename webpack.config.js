@@ -78,10 +78,10 @@ module.exports = {
   entry: entries,
 
   output: {
-  	path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, 'dist/'),
     publicPath: 'http://' + getLocalIP() + ':9999/',
     // publicPath: 'http://localhost:9999/',
-  	// publicPath: '/',
+    // publicPath: '/',
     filename: '[name].js',     //name，对应entry名称
     chunkFilename: "[id].chunk.js"
   },
@@ -137,7 +137,7 @@ module.exports = {
           name: './images/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
         },
         include: [
-  		    APP_IMAGES
+          APP_IMAGES
         ]
       },    
       {
@@ -270,21 +270,40 @@ module.exports = {
 if (process.env.NODE_ENV === 'production') {
   delete  module.exports.output.publicPath   //publicPath会影响打包路径
 
+  // module.exports.module.rules =  (module.exports.module.rules || []).concat([
+  //     //ExtractTextPlugin 与预览输出css不能同时存在
+  //     {
+  //       test: /\.(css|scss)$/,
+  //       //https://github.com/webpack-contrib/extract-text-webpack-plugin
+  //       use: ExtractTextPlugin.extract({
+  //            fallback: 'style-loader',
+  //            use: ['css-loader', "postcss-loader", "sass-loader"]
+  //       })        
+  //       ,
+  //       include: [
+  //         APP_SASS
+  //       ]        
+  //     }
+  // ])
   module.exports.module.rules =  (module.exports.module.rules || []).concat([
-      //ExtractTextPlugin 与预览输出css不能同时存在
       {
         test: /\.(css|scss)$/,
-        //https://github.com/webpack-contrib/extract-text-webpack-plugin
-        use: ExtractTextPlugin.extract({
-             fallback: 'style-loader',
-             use: ['css-loader', "postcss-loader", "sass-loader"]
-        })        
-        ,
+        use: [    
+          {
+            loader: 'style-loader',
+            options: {
+              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
+            }              
+          },
+          "css-loader?minimize",
+          "postcss-loader",
+          "sass-loader"
+        ],
         include: [
           APP_SASS
         ]        
       }
-  ])
+  ])  
 
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
@@ -297,20 +316,16 @@ if (process.env.NODE_ENV === 'production') {
     // 
     // [name]将会和entry中的chunk的名字一致
     // new ExtractTextPlugin( './css/[name].[contenthash].css'),
-    new ExtractTextPlugin( './css/[name].css'),
+    // new ExtractTextPlugin( './css/[name].css'),
 
     new webpack.optimize.UglifyJsPlugin({
-      compress: true,
-      beautify: false,
+      compress: false,
+      beautify: true,
       sourceMap: false,
       compress: {
         warnings: false
       }
     })
-
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true
-    // })
 
   ])
 }else{

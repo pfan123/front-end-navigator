@@ -1,6 +1,5 @@
 // vue本身是带热刷新的 https://github.com/vuejs/vue-hot-reload-api
 import styles from "./sass/style.s.scss"
-// require('./sass/style.s.scss')
 import Vue from 'vue'
 import axios from 'axios'
 //https://github.com/imcvampire/vue-axios
