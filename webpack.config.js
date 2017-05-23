@@ -178,9 +178,12 @@ module.exports = {
       '@img': "../images"
     },
     modules: [path.resolve(__dirname, "node_modules")]
-
    },
 
+  performance: {
+    // maxEntrypointSize: 300000,
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false
+  },
 
    plugins: [
       // 开启全局的模块热替换(HMR)
