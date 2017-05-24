@@ -79,6 +79,7 @@ export default {
     },
     sendSubmit(type, id, title, detail, link, cateTitle, originCateTitle, cateArr, totalData){
 
+      //https://github.com/leizongmin/js-xss
       //xss预防转义<> ""
       title = xss(title)
       detail = xss(detail)

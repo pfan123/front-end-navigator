@@ -9,7 +9,7 @@ if(module.hot) {
   module.hot.accept()
 }
 
-//去重之后顺序 如 [1,2,3,4,1,2] =》 [1,2,3,4]
+//https://github.com/leizongmin/js-xss
 export const xss = function (str) { 
 	let REGEXP_LT = /</g;
 	let REGEXP_GT = />/g;
