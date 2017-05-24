@@ -10,6 +10,15 @@ if(module.hot) {
 }
 
 //去重之后顺序 如 [1,2,3,4,1,2] =》 [1,2,3,4]
+export const xss = function (str) { 
+	let REGEXP_LT = /</g;
+	let REGEXP_GT = />/g;
+	let REGEXP_QUOTE = /"/g;
+	let REGEXP_QUOTE_2 = /&quot;/g;
+	return str.replace(REGEXP_LT, '&lt;').replace(REGEXP_GT, '&gt;').replace(REGEXP_QUOTE, '&quot;').replace(REGEXP_QUOTE_2, '"')
+}
+
+//去重之后顺序 如 [1,2,3,4,1,2] =》 [1,2,3,4]
 export const unqie = function (arr) { 
 	if(Object.prototype.toString.call(arr) != "[object Array]"){
 		arr = []
@@ -25,6 +34,7 @@ export const unqie = function (arr) {
 	  } 
 	return newArr
 }
+
 //去重之后顺序 如 [1,2,3,4,1,2] =》 [2,1,4,3]
 export const backUnqie = function (arr) { 
 	if(Object.prototype.toString.call(arr) != "[object Array]"){

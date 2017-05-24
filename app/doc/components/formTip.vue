@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import {checkType, sessionPosition, unqie} from '../utils/util'
+import {checkType, sessionPosition, unqie, xss} from '../utils/util'
 export default {
   data () {
     return {
@@ -78,6 +78,13 @@ export default {
       this.formInfo.isShow = false
     },
     sendSubmit(type, id, title, detail, link, cateTitle, originCateTitle, cateArr, totalData){
+
+      //xss预防转义<> ""
+      title = xss(title)
+      detail = xss(detail)
+      cateTitle = xss(cateTitle)
+      link = xss(link)
+
       let self = this
       if(self.isSucc){
         return;
@@ -88,7 +95,7 @@ export default {
             alert("都是必填项，请认真填写");
           }else{
            self.isSucc = true
-          console.log("objectId", id)
+         // console.log("objectId", id)
            let dataTypeDoc = AV.Object.createWithoutData('DataTypeDoc', id)
             // 修改属性
             dataTypeDoc.set('title', title)
