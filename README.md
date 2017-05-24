@@ -10,9 +10,9 @@
 
 ![前端导航首页](http://img.pfan123.com/docs/docs_1.png)
 
-[前端导航登录页面](https://docs.pfan123.com)
+[前端导航登录页面](https://docs.pfan123.com/admin.html#/)
 
-![前端导航登录页面](https://docs.pfan123.com/admin.html#/)
+![前端导航登录页面](http://img.pfan123.com/docs/docs_2.png)
 
 [前端导航管理页面](https://docs.pfan123.com/admin.html#/edit)
 
