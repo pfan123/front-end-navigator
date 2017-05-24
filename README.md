@@ -6,6 +6,18 @@
 
 记得2015年时，当我为查找资料而烦恼时，时间久了容易忘记时，为了方便自己记忆以备后用，简单的搭了 [前端开发导航平台](http://doc.pfan123.com/)（其实就是一静态页面展示，手动在页面上添加数据），但随着时间过去，前端圈的变化，以及工作的忙碌，后来越来越懒得去手动添加，感觉异常的麻烦，一直是自己想解决的一个问题。最近，抽了一个周末，把平台重新重构了一遍，优化了预览导航，以及增加简单的管理，[NEW 前端开发导航平台](https://docs.pfan123.com)。
 
+[前端导航首页](https://docs.pfan123.com)
+
+[!前端导航首页](http://img.pfan123.com/docs/docs_1.png)
+
+[前端导航登录页面](https://docs.pfan123.com)
+
+[!前端导航登录页面](https://docs.pfan123.com/admin.html#/)
+
+[前端导航管理页面](https://docs.pfan123.com/admin.html#/edit)
+
+[!前端导航登录页面](http://img.pfan123.com/docs/docs_3.png)
+
 ## 平台重构涉及技术点
 
 技术架构： webpack2+vue2+vue-router2+leancloud+Mockjs
