@@ -77,7 +77,7 @@ actions: {
 
 由于 Vuex 的状态存储是响应式的，从 store 实例中读取状态最简单的方法就是在[计算属性](https://cn.vuejs.org/v2/guide/computed.html)中返回某个状态：
 
-- 1.computed 计算属性
+- computed 计算属性
 
 计算属性是为了解决模版内表达式的数据运算来的，能够计算缓存解藕代码。
 
@@ -108,7 +108,7 @@ const Counter = {
 ```
 每当 `store.state.count` 变化的时候, 都会重新求取计算属性，并且触发更新相关联的 DOM。
 
-- 2.mapState 辅助函数
+- mapState 辅助函数
 
 当一个组件需要获取多个状态时候，将这些状态都声明为计算属性会有些重复和冗余。为了解决这个问题，我们可以使用 `mapState` 辅助函数帮助我们生成计算属性，让你少按几次键：
 
