@@ -66,6 +66,8 @@
 
 [Vue 2.0组件通信](https://vuefe.cn/v2/guide/components.html#构成组件)
 
+[Vuex2.0 状态管理](./Vuex2.0状态管理.md)
+
 
 ## 参考案例
 
