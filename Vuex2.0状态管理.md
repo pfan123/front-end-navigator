@@ -133,7 +133,7 @@ export default {
 }
 ```
 
-- 3.mapActions 组件中分发 Action
+#### 3.mapActions 组件中分发 Action
 
 在组件中使用 `this.$store.dispatch('xxx')` 分发 action，或者使用 `mapActions` 辅助函数将组件的 methods 映射为 `store.dispatch` 调用（需要先在根节点注入 `store`）
 
@@ -153,7 +153,7 @@ export default {
 }
 ```
 
-- 4.异步组合 Actions
+#### 4.异步组合 Actions
 
 Action 通常是异步的， store.dispatch 可以处理被触发的 action 的回调函数返回的 Promise，并且 `store.dispatch` 仍旧返回Promise，可知道 action 何时结束，方便组合多个 action 处理更加复杂的异步流程。
 
@@ -207,7 +207,7 @@ actions: {
 }
 ```
 
-- 5.Modules
+#### 5.Modules
 
 由于使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。
 
@@ -332,7 +332,7 @@ const store = new Vuex.Store({
 })
 ```
 
-- 6.模块动态注册
+#### 6.模块动态注册
 
 在 store 创建之后，你可以使用 `store.registerModule` 方法注册模块：
 
