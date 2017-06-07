@@ -40,10 +40,6 @@ console.log(cube(5)); // 125
 "use strict";
 /* unused harmony export square */
 /* harmony export (immutable) */ __webpack_exports__["a"] = cube;
-// 这个函数没有被其他地方引用过
-function square(x) {
-  return x * x;
-}
 
 // 这个函数被引用了
 function cube(x) {
@@ -62,6 +58,8 @@ console.log(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__maths_js__["a" /*
 
 /***/ })
 ```
+
+>注意：要正确使用 Webpack 2 Tree Shaking ，我们需要对.babelrc文件设置特定的presets预设， ` "presets": ["es2015-native-modules"]`， 请参考 [Webpack 2 Tree Shaking Configuration](http://moduscreate.com/webpack-2-tree-shaking-configuration/);
 
 ## `resolve.root`, `resolve.fallback`, `resolve.modulesDirectories`
 
@@ -670,3 +668,4 @@ v2.2.1之前（即从 v2.0.0 到 v2.2.0），使用 Complex options，需要在 
 参考资料：
 [webpack2.0](https://webpack.js.org/)
 [webpack guide](https://github.com/webpack/webpack.js.org/tree/master/content/guides)
+[如何写好.babelrc？Babel的presets和plugins配置解析](https://zhuanlan.zhihu.com/p/24224107)
