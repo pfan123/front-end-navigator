@@ -23,6 +23,14 @@
 - 4.leancloud数据云存储
 - 5.Mockjs开发过程中模拟测试数据
 
+规范提交：husky + validate-commit-msg + conventional-changelog
+
+[husky](https://github.com/typicode/husky)
+[validate-commit-msg](https://github.com/conventional-changelog/validate-commit-msg)
+[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli)
+[Git commit message和工作流规范](http://ivweb.io/topic/58ba702bdb35a9135d42f83d)
+[知乎Commit message提交格式](https://www.zhihu.com/question/56120376)
+
 ## 收录前端资源
 
 

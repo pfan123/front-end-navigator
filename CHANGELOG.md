@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# 1.0.0 (2017-06-19)
+
+
+### Features
+
+* **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
+
+
+
 2017-04-25 
 
 采用webpack2+vue2+vue-router2+leancloud+Mockjs技术重构前端导航平台
