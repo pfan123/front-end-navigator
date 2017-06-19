@@ -7,4 +7,6 @@ node_modules/
 dist/**
 app/o2/
 app/test/**
+client.js
+tcp.js
 
