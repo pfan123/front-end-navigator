@@ -72,6 +72,8 @@
 
 [webpack2 使用优化](https://github.com/gwuhaolin/blog/issues/2)
 
+[Webpack插件中CommonsChunkPlugin 与 ExtractTextPlugin](https://github.com/pfan123/front-end-navigator/issues/2)
+
 [webpack插件开发](./webpack插件开发.md)
 
 [vue数据更新， 视图未更新](https://github.com/pfan123/front-end-navigator/issues/1)
@@ -79,6 +81,10 @@
 [Vue 2.0组件通信](https://vuefe.cn/v2/guide/components.html#构成组件)
 
 [Vuex2.0 状态管理](./Vuex2.0状态管理.md)
+
+[webpack 3: Official Release](https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b)
+
+[webpack 2: Github](https://github.com/webpack/webpack)
 
 
 ## 参考案例

@@ -192,19 +192,22 @@ module.exports = {
       // 当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
       new webpack.NamedModulesPlugin(),
 
-      //https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks#webpackconfigjs
-      new webpack.optimize.CommonsChunkPlugin({
-          name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
-          chunks: Object.keys(entries),
-          minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
-      }),
-
       new ImageminPlugin({
         disable: process.env.NODE_ENV !== 'production', // Disable during development
         pngquant: {
           quality: '95-100'
         }
-      })      
+      }),      
+
+      //https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks#webpackconfigjs
+      new webpack.optimize.CommonsChunkPlugin({
+          name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
+          chunks: Object.keys(entries),
+          // minChunks: Infinity
+          minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
+      })
+
+         
       
       // //静态资源分割存储
       // new staticToBuild({
@@ -288,6 +291,7 @@ if (process.env.NODE_ENV === 'production') {
   //       ]        
   //     }
   // ])
+
   module.exports.module.rules =  (module.exports.module.rules || []).concat([
       {
         test: /\.(css|scss)$/,
@@ -306,7 +310,7 @@ if (process.env.NODE_ENV === 'production') {
           APP_SASS
         ]        
       }
-  ])  
+  ])
 
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
@@ -332,6 +336,7 @@ if (process.env.NODE_ENV === 'production') {
 
   ])
 }else{
+
   module.exports.module.rules =  (module.exports.module.rules || []).concat([
       {
         test: /\.(css|scss)$/,
@@ -354,23 +359,24 @@ if (process.env.NODE_ENV === 'production') {
 
 }
 
-  Object.keys(entries).map( (name) => {
-    var plugin = new HtmlWebpackPlugin({
-          filename: name + '.html',
-          template: path.join(APP_PATH, name+'.shtml'),
-          inject: true,
-          chunks: ["vendors", name],
-          showErrors: true,
-          minify: {
-            removeComments: true,
-            collapseWhitespace: true,
-            removeAttributeQuotes: true
-            // more options:
-            // https://github.com/kangax/html-minifier#options-quick-reference
-          }
-        })   
 
-    module.exports.plugins.push(plugin);
-  } )
+Object.keys(entries).map( (name) => {
+  var plugin = new HtmlWebpackPlugin({
+        filename: name + '.html',
+        template: path.join(APP_PATH, name+'.shtml'),
+        inject: true,
+        chunks: ["vendors", name],
+        showErrors: true,
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true
+          // more options:
+          // https://github.com/kangax/html-minifier#options-quick-reference
+        }
+      })   
+
+  module.exports.plugins.push(plugin);
+} )
 
 //静态资源是相对于output路径， js路径是相对入口路径
