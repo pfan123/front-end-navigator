@@ -1,7 +1,7 @@
 {
   "name": "fepfan",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "是否有过当你看到比较优秀的前端资源时，由于没有时间来的及收录，过段时间等需要的时，却翻来覆去不知道去哪了～～ 前端导航站，收集前端业内优秀技术博客、框架，方便快速寻找优秀资源，～～宝宝再也不用担心查找资源了～～",
   "main": "index.js",
   "scripts": {
     "commitmsg": "validate-commit-msg",
@@ -31,11 +31,11 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "file-loader": "^0.11.1",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
     "glob": "^7.1.1",
     "html-loader": "^0.4.5",
-    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin": "^2.29.0",
     "husky": "^0.13.4",
     "imagemin-webpack-plugin": "^1.4.4",
     "leancloud-storage": "^2.3.0",
@@ -45,17 +45,18 @@
     "postcss-loader": "^2.0.5",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
-    "uglifyjs-webpack-plugin": "^0.4.3",
-    "url-loader": "^0.5.8",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "url-loader": "^0.5.9",
     "validate-commit-msg": "^2.12.2",
     "vue-axios": "^2.0.2",
     "vue-html": "0.3.0",
     "vue-loader": "11.3.4",
     "vue-resource": "^1.3.1",
     "vue-router": "^2.5.3",
+    "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.0",
-    "webpack": "^2.3.3",
-    "webpack-dev-server": "^2.4.2"
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
     "vue": "^2.3.0"
@@ -90,5 +91,13 @@
       "helpMessage": "",
       "autoFix": false
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfan123/front-end-navigator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pfan123/front-end-navigator/issues"
+  },
+  "homepage": "https://github.com/pfan123/front-end-navigator#readme"
 }

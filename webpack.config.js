@@ -76,6 +76,8 @@ const entries = getEntries([APP_PATH+'/*.js'])
 
 module.exports = {
   entry: entries,
+  "cache": true,
+  "context": __dirname,
 
   output: {
     path: path.resolve(__dirname, 'dist/'),
@@ -97,23 +99,86 @@ module.exports = {
         ]            
       },    
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
-            'scss': 'vue-style-loader!css-loader!postcss-loader!sass-loader',
-            'sass': 'vue-style-loader!css-loader!postcss-loader!sass-loader?indentedSyntax'
-          }
-          // other vue-loader options go here
-        },
-        // include: [
-        //   APP_COMPONENT
-        // ],
-        exclude: /node_modules/      
-      },    
+          "test": /\.vue$/,
+          "loader": "vue-loader",
+          "options": {
+              "loaders": {
+                  "css": [
+                      "vue-style-loader",
+                      {
+                          "loader": "css-loader",
+                          "options": {
+                              "minimize": false,
+                              "sourceMap": false
+                          }
+                      }
+                  ],
+                  "postcss": [
+                      "vue-style-loader",
+                      {
+                          "loader": "css-loader",
+                          "options": {
+                              "minimize": false,
+                              "sourceMap": false
+                          }
+                      }
+                  ],
+                  "less": [
+                      "vue-style-loader",
+                      {
+                          "loader": "css-loader",
+                          "options": {
+                              "minimize": false,
+                              "sourceMap": false
+                          }
+                      },
+                      {
+                          "loader": "less-loader",
+                          "options": {
+                              "sourceMap": false
+                          }
+                      }
+                  ],
+                  "sass": [
+                      "vue-style-loader",
+                      {
+                          "loader": "css-loader",
+                          "options": {
+                              "minimize": false,
+                              "sourceMap": false
+                          }
+                      },
+                      {
+                          "loader": "sass-loader",
+                          "options": {
+                              "indentedSyntax": true,
+                              "sourceMap": false
+                          }
+                      }
+                  ],
+                  "scss": [
+                      "vue-style-loader",
+                      {
+                          "loader": "css-loader",
+                          "options": {
+                              "minimize": false,
+                              "sourceMap": false
+                          }
+                      },
+                      {
+                          "loader": "sass-loader",
+                          "options": {
+                              "sourceMap": false
+                          }
+                      }
+                  ]
+              }
+          },
+          // include: [
+          //   APP_COMPONENT
+          // ],
+          exclude: /node_modules/          
+      },  
       {
         test: /\.js$/,
         loader: 'babel-loader?cacheDirectory',
@@ -182,7 +247,8 @@ module.exports = {
    },
 
   performance: {
-    // maxEntrypointSize: 300000,
+    "maxAssetSize": 250000,
+    "maxEntrypointSize": 250000,
     hints: process.env.NODE_ENV === 'production' ? 'warning' : false
   },
 
@@ -192,6 +258,8 @@ module.exports = {
       
       // 当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
       new webpack.NamedModulesPlugin(),
+
+      new webpack.optimize.ModuleConcatenationPlugin(), //减少模块闭包函数数量从而加快JS的执行速度
 
       new ImageminPlugin({
         disable: process.env.NODE_ENV !== 'production', // Disable during development
