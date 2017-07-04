@@ -26,13 +26,19 @@ window.middleVue = new Vue()
 //vm.$el属性 elementOrSelector，元素或选择器
 const vmHeader = new Vue({
   el: '[vm-mod="sideLeftNav"]', 
-  // render: h => h(App)
- render: (createElement) => {
- 	 return createElement(sideLeftNav)
- 	// return createElement('div',  Array.apply(null, { length: 20 }).map(function () {
- 	// 	console.log(createElement('p', 'hi1'))
-  //     return createElement('p', 'hi1')
-  //   }))
+  // render: h => h(App) render是替代template字符串拼接形式推荐使用
+ // render: (createElement) => {
+ //   //createElement 函数中生成模板, 可通过组件生成
+ // 	 return createElement(sideLeftNav)
+ // 	// return createElement('div',  Array.apply(null, { length: 20 }).map(function () {
+ // 	// 	console.log(createElement('p', 'hi1'))
+ //  //     return createElement('p', 'hi1')
+ //  //   }))
+ // },
+ template: '<side-left-nav></side-left-nav>',
+
+ components: {
+  "side-left-nav": sideLeftNav
  },
 
  created: () => {

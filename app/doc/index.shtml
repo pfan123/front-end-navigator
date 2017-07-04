@@ -14,9 +14,13 @@
 </head>
 
     <!-- S 左侧导航内容 -->
-    <div vm-mod = "sideLeftNav"></div>
+    <div vm-mod = "sideLeftNav">
+      <!-- <side-left-nav></side-left-nav> -->
+    </div>
     <!-- E 左侧导航内容 -->
-
+    
+    <div vm-mod = "sideLeftone"></div>
+  
     <!-- S 主内容 -->
     <div vm-mod = "mainContent" ></div>
     <!-- E 主内容 -->
@@ -26,4 +30,6 @@
   </body>
 </html>
  
+
+
 

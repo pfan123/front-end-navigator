@@ -82,6 +82,8 @@
 
 [Vuex2.0 状态管理](./Vuex2.0状态管理.md)
 
+[Vue2.0 中 render 和 template 疑惑点](https://github.com/pfan123/front-end-navigator/issues/3)
+
 [webpack 3: Official Release](https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b)
 
 [webpack 2: Github](https://github.com/webpack/webpack)
