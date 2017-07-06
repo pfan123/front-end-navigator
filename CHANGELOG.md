@@ -1,19 +1,19 @@
-<a name="1.0.0"></a>
-# 1.0.0 (2017-06-20)
+<a name="1.1.0"></a>
+# 1.1.0 (2017-07-06)
+
+
+### Bug Fixes
+
+* **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
 
 
 ### Features
 
 * **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
+* **modifyreadme:** add webpack in readme ([ea8b9b8](https://github.com/pfan123/front-end-navigator/commit/ea8b9b8))
+* **test:** test new Vue and components different ([51ae20d](https://github.com/pfan123/front-end-navigator/commit/51ae20d))
+* **update:** update modules ([a401eda](https://github.com/pfan123/front-end-navigator/commit/a401eda))
+* **update:** update webpack3.0 ([890e4fc](https://github.com/pfan123/front-end-navigator/commit/890e4fc))
 
 
 
--2017-04-25
--
--采用webpack2+vue2+vue-router2+leancloud+Mockjs技术重构前端导航平台
--
--2017-05-21
--
--设置上传文件到服务器 scp -r  -P 22 local_folder remote_username@remote_ip:remote_folder 将其部署到http2下
--
--CommonsChunkPlugin 与 ExtractTextPlugin 插件共用，会导致分离出来的js存在call报错现象，故去掉ExtractTextPlugin分离样式

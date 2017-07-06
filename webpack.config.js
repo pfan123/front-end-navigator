@@ -99,10 +99,19 @@ module.exports = {
         ]            
       },    
       {
-          "test": /\.vue$/,
+          "test": /\.vue$/,   // ExtractTextPlugin https://github.com/vuejs/vue-loader/issues/622
           "loader": "vue-loader",
           "options": {
               "loaders": {
+                      // "scss": ExtractTextPlugin.extract({
+                      //   "use": "css-loader!sass-loader",
+                      //   "fallback": "vue-style-loader"
+                      // }),
+                      // "sass": ExtractTextPlugin.extract({
+                      //   "use": "css-loader!sass-loader?indentedSyntax",
+                      //   "fallback": "vue-style-loader"
+                      // })                
+
                   "css": [
                       "vue-style-loader",
                       {
@@ -274,9 +283,12 @@ module.exports = {
           chunks: Object.keys(entries),
           // minChunks: Infinity
           minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
-      })
+      }),
 
-         
+      new webpack.optimize.CommonsChunkPlugin({
+          name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
+      })
+   
       
       // //静态资源分割存储
       // new staticToBuild({
