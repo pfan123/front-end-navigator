@@ -112,8 +112,11 @@
 >主要有两种方式：babel-runtime 和 babel-polyfill
 
 [Babel下的ES6兼容性与规范](http://imweb.io/topic/561f9352883ae3ed25e400f5)
+
 [使用 ES6 的浏览器兼容性问题](https://zhuanlan.zhihu.com/p/20904140)
+
 [Bable polyfill](https://babeljs.io/docs/usage/polyfill/)
+
 [Babel 用户手册](https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md)
 
 ## License
