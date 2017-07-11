@@ -194,7 +194,7 @@ module.exports = {
         use: {
           loader: 'babel-loader?cacheDirectory',
           options: {
-            presets: ['es2015']
+            presets: ['es2015','stage-2']
           }
         },   
         include: [

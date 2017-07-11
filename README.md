@@ -105,7 +105,16 @@
 
 `问题2`：
 >parseQuery() will be replaced with getOptions() in the next major version of loader-utils
->此问题，是在`babel-loader@6.x`里面出现由`file-loader or url-loader`导致，更新到`babel-loader@7.x`可以解决
+>此问题，是在`babel-loader@6.x`里面出现由`file-loader or url-loader`导致，更新到`babel-loader@7.x`可以解决 
+
+`问题3`：
+> 由于 Babel 默认只转换转各种 ES2015 语法，而不转换新的 API，比如 Promise，以及Object.assign、Array.from 这些新方法，这时我们需要提供一些 ployfill 来模拟出这样一个提供原生支持功能的浏览器环境。
+>主要有两种方式：babel-runtime 和 babel-polyfill
+
+[Babel下的ES6兼容性与规范](http://imweb.io/topic/561f9352883ae3ed25e400f5)
+[使用 ES6 的浏览器兼容性问题](https://zhuanlan.zhihu.com/p/20904140)
+[Bable polyfill](https://babeljs.io/docs/usage/polyfill/)
+[Babel 用户手册](https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md)
 
 ## License
 
