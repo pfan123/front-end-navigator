@@ -1,5 +1,5 @@
 //font字体问题http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts
-//https://github.com/babel/babel-loader/issues/392  parseQuery() will be replaced with getOptions() in the next major version of loader-utils
+
 //http://xwartz.xyz/blog/2016/06/electron-with-hmr/   hot-update.json无法更新模块，其实就是路径问题
 const fs = require("fs")
 const os = require("os")
@@ -103,84 +103,14 @@ module.exports = {
           "loader": "vue-loader",
           "options": {
               "loaders": {
-                      // "scss": ExtractTextPlugin.extract({
-                      //   "use": "css-loader!sass-loader",
-                      //   "fallback": "vue-style-loader"
-                      // }),
-                      // "sass": ExtractTextPlugin.extract({
-                      //   "use": "css-loader!sass-loader?indentedSyntax",
-                      //   "fallback": "vue-style-loader"
-                      // })                
-
-                  "css": [
-                      "vue-style-loader",
-                      {
-                          "loader": "css-loader",
-                          "options": {
-                              "minimize": false,
-                              "sourceMap": false
-                          }
-                      }
-                  ],
-                  "postcss": [
-                      "vue-style-loader",
-                      {
-                          "loader": "css-loader",
-                          "options": {
-                              "minimize": false,
-                              "sourceMap": false
-                          }
-                      }
-                  ],
-                  "less": [
-                      "vue-style-loader",
-                      {
-                          "loader": "css-loader",
-                          "options": {
-                              "minimize": false,
-                              "sourceMap": false
-                          }
-                      },
-                      {
-                          "loader": "less-loader",
-                          "options": {
-                              "sourceMap": false
-                          }
-                      }
-                  ],
-                  "sass": [
-                      "vue-style-loader",
-                      {
-                          "loader": "css-loader",
-                          "options": {
-                              "minimize": false,
-                              "sourceMap": false
-                          }
-                      },
-                      {
-                          "loader": "sass-loader",
-                          "options": {
-                              "indentedSyntax": true,
-                              "sourceMap": false
-                          }
-                      }
-                  ],
-                  "scss": [
-                      "vue-style-loader",
-                      {
-                          "loader": "css-loader",
-                          "options": {
-                              "minimize": false,
-                              "sourceMap": false
-                          }
-                      },
-                      {
-                          "loader": "sass-loader",
-                          "options": {
-                              "sourceMap": false
-                          }
-                      }
-                  ]
+                  "scss": ExtractTextPlugin.extract({
+                    "use": "css-loader!sass-loader",
+                    "fallback": "vue-style-loader"
+                  }),
+                  "sass": ExtractTextPlugin.extract({
+                    "use": "css-loader!sass-loader?indentedSyntax",
+                    "fallback": "vue-style-loader"
+                  })                
               }
           },
           // include: [
@@ -196,15 +126,27 @@ module.exports = {
           options: {
             presets: ['es2015']
           }
-        },   
+        }, 
         include: [
           APP_PATH
         ]        
-      },
+      }, 
       {
         test: /\.json$/,
         loader: 'json-loader'
-      },                   
+      }, 
+      {
+        test: /\.(css|scss)$/,
+        //https://github.com/webpack-contrib/extract-text-webpack-plugin
+        use: ExtractTextPlugin.extract({
+             fallback: 'style-loader',
+             use: ['css-loader', "postcss-loader", "sass-loader"]
+        })        
+        ,
+        include: [
+          APP_SASS
+        ]        
+      },                        
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'file-loader',
@@ -305,7 +247,7 @@ module.exports = {
     noInfo: true,
     quiet: false,
     //inline: true, //内联模式(inline mode)有两种方式：命令行方式和Node.js API
-    historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
+    historyApiFallback: false,
     open: true,
     hot: true,  //Hot Module Replacement, 启用 webpack 的模块热替换特性，结合插件 new webpack.HotModuleReplacementPlugin()
     compress: true,
@@ -356,91 +298,38 @@ module.exports = {
 };
 
 
-if (process.env.NODE_ENV === 'production') {
-  delete  module.exports.output.publicPath   //publicPath会影响打包路径
 
-  // module.exports.module.rules =  (module.exports.module.rules || []).concat([
-  //     //ExtractTextPlugin 与预览输出css不能同时存在
-  //     {
-  //       test: /\.(css|scss)$/,
-  //       //https://github.com/webpack-contrib/extract-text-webpack-plugin
-  //       use: ExtractTextPlugin.extract({
-  //            fallback: 'style-loader',
-  //            use: ['css-loader', "postcss-loader", "sass-loader"]
-  //       })        
-  //       ,
-  //       include: [
-  //         APP_SASS
-  //       ]        
-  //     }
-  // ])
+delete  module.exports.output.publicPath   //publicPath会影响打包路径
 
-  module.exports.module.rules =  (module.exports.module.rules || []).concat([
-      {
-        test: /\.(css|scss)$/,
-        use: [    
-          {
-            loader: 'style-loader',
-            options: {
-              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
-            }              
-          },
-          "css-loader?minimize",
-          "postcss-loader",
-          "sass-loader"
-        ],
-        include: [
-          APP_SASS
-        ]        
-      }
-  ])
+module.exports.devtool = '#source-map'
+// http://vue-loader.vuejs.org/en/workflow/production.html
+module.exports.plugins = (module.exports.plugins || []).concat([
+  // new webpack.DefinePlugin({
+  //   'process.env': {
+  //     NODE_ENV: '"production"'
+  //   }
+  // }),
+  // 
+  // [name]将会和entry中的chunk的名字一致
+  // new ExtractTextPlugin( './css/[name].[contenthash].css'),
+  new ExtractTextPlugin({
+    filename:  (getPath) => {
+      return getPath('./css/[name].css').replace('css/js', 'css');
+    },
+    allChunks: true    
+  }),
 
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: '"production"'
-    //   }
-    // }),
-    // 
-    // [name]将会和entry中的chunk的名字一致
-    // new ExtractTextPlugin( './css/[name].[contenthash].css'),
-    // new ExtractTextPlugin( './css/[name].css'),
+  new webpack.optimize.UglifyJsPlugin({
+    compress: false,
+    beautify: true,
+    sourceMap: false,
+    compress: {
+      warnings: false
+    }
+  })
 
-    new webpack.optimize.UglifyJsPlugin({
-      compress: false,
-      beautify: true,
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    })
+])
 
-  ])
-}else{
-
-  module.exports.module.rules =  (module.exports.module.rules || []).concat([
-      {
-        test: /\.(css|scss)$/,
-        use: [    
-          {
-            loader: 'style-loader',
-            options: {
-              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
-            }              
-          },
-          "css-loader?minimize",
-          "postcss-loader",
-          "sass-loader"
-        ],
-        include: [
-          APP_SASS
-        ]        
-      }
-  ])
-
-}
 
 
 Object.keys(entries).map( (name) => {

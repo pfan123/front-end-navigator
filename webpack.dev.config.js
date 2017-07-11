@@ -1,10 +1,10 @@
 //font字体问题http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts
-//https://github.com/babel/babel-loader/issues/392  parseQuery() will be replaced with getOptions() in the next major version of loader-utils
+
 //http://xwartz.xyz/blog/2016/06/electron-with-hmr/   hot-update.json无法更新模块，其实就是路径问题
 const fs = require("fs")
 const os = require("os")
 const path = require('path')
-const open = require("child_process");
+const open = require("child_process")
 const webpack = require('webpack')
 const glob = require('glob')  //允许使用*等符号匹配对应规则的文件.
 
@@ -17,7 +17,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const staticToBuild = require('./lib/staticToBuild')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 
-console.log(__dirname)
 
 process.traceDeprecation = true
 
@@ -67,7 +66,8 @@ function getEntries(globPath) {
 
     // _entries[entry.replace(__dirname+'/', '').replace(/\.js/, '')] = entry
     // 不推荐用路径做entry名字，会导致生成模版、图片、字体、样式路径不好确定
-    _entries[basename] = entry
+    _entries[basename] = [entry, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true']
+
   }
   return _entries;
 }
@@ -103,15 +103,6 @@ module.exports = {
           "loader": "vue-loader",
           "options": {
               "loaders": {
-                      // "scss": ExtractTextPlugin.extract({
-                      //   "use": "css-loader!sass-loader",
-                      //   "fallback": "vue-style-loader"
-                      // }),
-                      // "sass": ExtractTextPlugin.extract({
-                      //   "use": "css-loader!sass-loader?indentedSyntax",
-                      //   "fallback": "vue-style-loader"
-                      // })                
-
                   "css": [
                       "vue-style-loader",
                       {
@@ -196,7 +187,7 @@ module.exports = {
           options: {
             presets: ['es2015']
           }
-        },   
+        },        
         include: [
           APP_PATH
         ]        
@@ -204,7 +195,30 @@ module.exports = {
       {
         test: /\.json$/,
         loader: 'json-loader'
-      },                   
+      },  
+      {
+        test: /\.(css|scss)$/,
+        use: [    
+          {
+            loader: 'style-loader',
+            options: {
+              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
+            }              
+          },
+          {
+              "loader": "css-loader",
+              "options": {
+                  "minimize": false,
+                  "sourceMap": false
+              }
+          },
+          "postcss-loader",
+          "sass-loader"
+        ],
+        include: [
+          APP_SASS
+        ]        
+      },                       
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'file-loader',
@@ -285,162 +299,20 @@ module.exports = {
           chunks: Object.keys(entries),
           // minChunks: Infinity
           minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
-      })
+      }),
 
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
-      // })
+      // }),
    
-      
       // //静态资源分割存储
       // new staticToBuild({
       //   dir: '/app/doc',
       //   regex: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf|css)(\?.*)?$/i
       // })
-   ],
-   devServer: {
-    contentBase: path.resolve(__dirname, 'dist/'),  //访问localhost:xxx 浏览器能看到的目录
-    host: getLocalIP(),
-    port: 9999,
-    noInfo: true,
-    quiet: false,
-    //inline: true, //内联模式(inline mode)有两种方式：命令行方式和Node.js API
-    historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
-    open: true,
-    hot: true,  //Hot Module Replacement, 启用 webpack 的模块热替换特性，结合插件 new webpack.HotModuleReplacementPlugin()
-    compress: true,
-    stats: "errors-only",
-    // hotOnly: true,
-    setup: function (app){
- 
-      app.get(['*.shtml', '*.html'], (req, res, next) => {
-        console.log('req.path', req.path)
-        let targetPath = path.join(APP_PATH, req.path);
-
-        if (!fs.existsSync(targetPath)) {
-          return next();
-        }
-
-        // //targetJSPath 是预览相对于/dist/输出路径
-        // let targetJSPath = targetPath.replace(__dirname, '').replace(path.extname(targetPath), '.js')
-        let targetJSPath = req.path.replace(/\.(shtml|html)/, '.js')
-
-        res.set('Content-Type', 'text/html')
-        let content = fs.readFileSync(targetPath, 'utf8')+'<script src="./vendors.js"></script><script src=".' + targetJSPath + '"></script>'
-        res.send(content);
-
-      })  
-
-      let data = Mock.mock({
-          // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-          'list|10': [{
-            'cateTitle': '@name',
-            'data|5': [{
-              'title': '@title(5)',
-              'detail': '@cparagraph(8)',
-              'link': '@url',
-              'image': '@image'
-            }]         
-          }]
-
-      })
-
-      app.get('/api/index', (req, res, next) => {
-        // res.send(data);
-        let data = fs.readFileSync(path.join(APP_MOCK, 'data.json'), 'utf8')
-        res.send( {'list': JSON.parse(data)} );
-      })
-
-    }
-   }   
+   ]
 };
 
-
-if (process.env.NODE_ENV === 'production') {
-  delete  module.exports.output.publicPath   //publicPath会影响打包路径
-
-  // module.exports.module.rules =  (module.exports.module.rules || []).concat([
-  //     //ExtractTextPlugin 与预览输出css不能同时存在
-  //     {
-  //       test: /\.(css|scss)$/,
-  //       //https://github.com/webpack-contrib/extract-text-webpack-plugin
-  //       use: ExtractTextPlugin.extract({
-  //            fallback: 'style-loader',
-  //            use: ['css-loader', "postcss-loader", "sass-loader"]
-  //       })        
-  //       ,
-  //       include: [
-  //         APP_SASS
-  //       ]        
-  //     }
-  // ])
-
-  module.exports.module.rules =  (module.exports.module.rules || []).concat([
-      {
-        test: /\.(css|scss)$/,
-        use: [    
-          {
-            loader: 'style-loader',
-            options: {
-              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
-            }              
-          },
-          "css-loader?minimize",
-          "postcss-loader",
-          "sass-loader"
-        ],
-        include: [
-          APP_SASS
-        ]        
-      }
-  ])
-
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: '"production"'
-    //   }
-    // }),
-    // 
-    // [name]将会和entry中的chunk的名字一致
-    // new ExtractTextPlugin( './css/[name].[contenthash].css'),
-    // new ExtractTextPlugin( './css/[name].css'),
-
-    new webpack.optimize.UglifyJsPlugin({
-      compress: false,
-      beautify: true,
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    })
-
-  ])
-}else{
-
-  module.exports.module.rules =  (module.exports.module.rules || []).concat([
-      {
-        test: /\.(css|scss)$/,
-        use: [    
-          {
-            loader: 'style-loader',
-            options: {
-              name: './css/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
-            }              
-          },
-          "css-loader?minimize",
-          "postcss-loader",
-          "sass-loader"
-        ],
-        include: [
-          APP_SASS
-        ]        
-      }
-  ])
-
-}
 
 
 Object.keys(entries).map( (name) => {
