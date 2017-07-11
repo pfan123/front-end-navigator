@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-07-06)
+# 1.1.0 (2017-07-11)
 
 
 ### Bug Fixes
@@ -15,6 +15,7 @@
 * **update:** adjustment webpack3.0 config ([e2e97d5](https://github.com/pfan123/front-end-navigator/commit/e2e97d5))
 * **update:** update modules ([a401eda](https://github.com/pfan123/front-end-navigator/commit/a401eda))
 * **update:** update webpack3.0 ([890e4fc](https://github.com/pfan123/front-end-navigator/commit/890e4fc))
+* **update:** update webpack3.1.0 add koa2+koa-webpack-middleware ([34dff03](https://github.com/pfan123/front-end-navigator/commit/34dff03))
 
 
 

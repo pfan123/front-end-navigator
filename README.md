@@ -97,6 +97,15 @@
 
 [前端网址导航-haorooms导航](http://www.haorooms.com/nav)
 
+## 更新升级到webpack 3.1
+
+`问题1`：
+>DeprecationWarning: Chunk.modules is deprecated. Use Chunk.getNumberOfModules/mapModules/forEachModule/containsModule instead.
+>错误是由于 extract-text-webpack-plugin 引起，由于webpack升级到3.0之后，改变了引入extract-text-webpack-plugin参数的形式， 解决方案 [升级 webpack@3.1.0 + extract-text-webpack-plugin@3.0.0](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/529), 同时更改[extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin)参数方式
+
+`问题2`：
+>parseQuery() will be replaced with getOptions() in the next major version of loader-utils
+>此问题，是在`babel-loader@6.x`里面出现由`file-loader or url-loader`导致，更新到`babel-loader@7.x`可以解决
 
 ## License
 
