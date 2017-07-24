@@ -99,8 +99,7 @@
 
 ## webpack更新构建优化
 
-**webpack-uglify-parallel**
-(webpack-uglify-parallel)[https://github.com/tradingview/webpack-uglify-parallel]多线程并行压缩代码，提高效率
+[webpack-uglify-parallel](https://github.com/tradingview/webpack-uglify-parallel)多线程并行压缩代码，提高效率
 ```
 - new webpack.optimize.UglifyJsPlugin({
 -   exclude:/\.min\.js$/
