@@ -9,4 +9,5 @@ app/o2/
 app/test/**
 client.js
 tcp.js
-
+.happypack
+app/doc/utils/sw.js

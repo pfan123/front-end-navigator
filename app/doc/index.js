@@ -12,6 +12,8 @@ import {checkType, sessionPosition, unqie} from './utils/util'
 // import {data} from './mock/data.js'
 import initLeanCloud from './utils/initLeanCloud'
 
+import "babel-polyfill"
+
 // HMR interface
 if(module.hot) {
   // Capture hot update

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
+* **readme:** modify readme makedown ([592147d](https://github.com/pfan123/front-end-navigator/commit/592147d))
 
 
 ### Features

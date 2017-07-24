@@ -105,3 +105,21 @@ export class sessionPosition {
 	}
 
 }
+
+
+/**
+ * 数组去初undefined、null、‘’
+ */
+export const cleanArr = function (arr) { 
+	if(Object.prototype.toString.call(arr) != "[object Array]"){
+		arr = []
+	}
+   
+	for(let i = 0; i < arr.length; i++ ){
+		if(arr[i] === undefined || arr[i] === null || arr[i] == 'undefined' || arr[i] == ''){
+			arr.splice(i,1)
+			i--
+		}
+	}
+	return arr; 
+}

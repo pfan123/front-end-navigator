@@ -97,6 +97,30 @@
 
 [前端网址导航-haorooms导航](http://www.haorooms.com/nav)
 
+## webpack更新构建优化
+
+**webpack-uglify-parallel**
+(webpack-uglify-parallel)[https://github.com/tradingview/webpack-uglify-parallel]多线程并行压缩代码，提高效率
+```
+-new webpack.optimize.UglifyJsPlugin({
+-   exclude:/\.min\.js$/
+-   mangle:true,
+-   compress: { warnings: false },
+-   output: { comments: false }
+-})
+
++new UglifyJsParallelPlugin({
++  workers: os.cpus().length,
++  mangle: true,
++  compressor: {
++    warnings: false,
++    drop_console: true,
++    drop_debugger: true
++   }
++})
+
+```
+
 ## 更新升级到webpack 3.1
 
 `问题1`：
@@ -110,6 +134,31 @@
 `问题3`：
 > 由于 Babel 默认只转换转各种 ES2015 语法，而不转换新的 API，比如 Promise，以及Object.assign、Array.from 这些新方法，这时我们需要提供一些 ployfill 来模拟出这样一个提供原生支持功能的浏览器环境。
 >主要有两种方式：babel-runtime 和 babel-polyfill
+
+`问题4`：
+>引入happypack多进程构建，提升构建效率。配置 new HappyPack， 提示报错HappyPack: plugin for the loader '1' could not be found
+>必须要增加new HappyPack({id:1})，有点不明白
+>解决问题，是由于替换当前loader未去掉其中options导致
+```
+test: /\.js$/,
+exclude: /node_modules/,  //排除node_modules文件夹
+use: {
+  loader: 'happypack/loader?id=js'
+-  options: {
+-     presets: ['es2015','stage-2']
+-  }
+},  
+
+new HappyPack({
+	id: 'js',
+	//注意参数
++	loaders: [ 'babel-loader?cacheDirectory=true&presets[]=es2015&presets[]=stage-2' ],  
+	threadPool: happyThreadPool,
+	cache: true,
+	verbose: true        
+})          
+
+```
 
 [Babel下的ES6兼容性与规范](http://imweb.io/topic/561f9352883ae3ed25e400f5)
 

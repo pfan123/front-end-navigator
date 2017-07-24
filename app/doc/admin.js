@@ -8,6 +8,7 @@ import Register from './components/register.vue'
 import Edit from './components/edit.vue'
 import {checkType, sessionPosition, unqie} from './utils/util'
 import initLeanCloud from './utils/initLeanCloud'
+import "babel-polyfill"
 
 // HMR interface
 if(module.hot) {
