@@ -7,6 +7,8 @@ const path = require('path')
 const open = require("child_process");
 const webpack = require('webpack')
 const glob = require('glob')  //允许使用*等符号匹配对应规则的文件.
+const HappyPack = require('happypack')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 //https://github.com/nuysoft/Mock/wiki/Getting-Started
 const Mock = require('mockjs')
@@ -16,6 +18,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const staticToBuild = require('./lib/staticToBuild')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
+const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
 
 console.log(__dirname)
 
@@ -93,11 +96,11 @@ module.exports = {
       {
         test: /\.js$/,
         enforce: "pre",  //module.preLoaders的替代方案
-        loader: "eslint-loader", //https://github.com/MoOx/eslint-loader
+        loader: "happypack/loader?id=eslint", //https://github.com/MoOx/eslint-loader
         include: [
           APP_PATH
         ]            
-      },    
+      },   
       {
           "test": /\.vue$/,   // ExtractTextPlugin https://github.com/vuejs/vue-loader/issues/622
           "loader": "vue-loader",
@@ -122,15 +125,15 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,  //排除node_modules文件夹
         use: {
-          loader: 'babel-loader?cacheDirectory',
-          options: {
-            presets: ['es2015','stage-2']
-          }
-        }, 
+          loader: 'happypack/loader?id=js'
+          // options: {
+          //   presets: ['es2015','stage-2']
+          // }
+        },        
         include: [
           APP_PATH
         ]        
-      }, 
+      },
       {
         test: /\.json$/,
         loader: 'json-loader'
@@ -227,7 +230,23 @@ module.exports = {
           chunks: Object.keys(entries),
           // minChunks: Infinity
           minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
-      })
+      }),
+
+      new HappyPack({
+        id: 'js',
+        loaders: [ 'babel-loader?cacheDirectory=true&presets[]=es2015&presets[]=stage-2' ],
+        threadPool: happyThreadPool,
+        cache: true,
+        verbose: true        
+      }),
+
+      new HappyPack({
+        id: 'eslint',
+        loaders: [ 'eslint-loader' ],
+        threadPool: happyThreadPool,
+        cache: true,
+        verbose: true        
+      })  
 
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
@@ -239,62 +258,7 @@ module.exports = {
       //   dir: '/app/doc',
       //   regex: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf|css)(\?.*)?$/i
       // })
-   ],
-   devServer: {
-    contentBase: path.resolve(__dirname, 'dist/'),  //访问localhost:xxx 浏览器能看到的目录
-    host: getLocalIP(),
-    port: 9999,
-    noInfo: true,
-    quiet: false,
-    //inline: true, //内联模式(inline mode)有两种方式：命令行方式和Node.js API
-    historyApiFallback: false,
-    open: true,
-    hot: true,  //Hot Module Replacement, 启用 webpack 的模块热替换特性，结合插件 new webpack.HotModuleReplacementPlugin()
-    compress: true,
-    stats: "errors-only",
-    // hotOnly: true,
-    setup: function (app){
- 
-      app.get(['*.shtml', '*.html'], (req, res, next) => {
-        console.log('req.path', req.path)
-        let targetPath = path.join(APP_PATH, req.path);
-
-        if (!fs.existsSync(targetPath)) {
-          return next();
-        }
-
-        // //targetJSPath 是预览相对于/dist/输出路径
-        // let targetJSPath = targetPath.replace(__dirname, '').replace(path.extname(targetPath), '.js')
-        let targetJSPath = req.path.replace(/\.(shtml|html)/, '.js')
-
-        res.set('Content-Type', 'text/html')
-        let content = fs.readFileSync(targetPath, 'utf8')+'<script src="./vendors.js"></script><script src=".' + targetJSPath + '"></script>'
-        res.send(content);
-
-      })  
-
-      let data = Mock.mock({
-          // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-          'list|10': [{
-            'cateTitle': '@name',
-            'data|5': [{
-              'title': '@title(5)',
-              'detail': '@cparagraph(8)',
-              'link': '@url',
-              'image': '@image'
-            }]         
-          }]
-
-      })
-
-      app.get('/api/index', (req, res, next) => {
-        // res.send(data);
-        let data = fs.readFileSync(path.join(APP_MOCK, 'data.json'), 'utf8')
-        res.send( {'list': JSON.parse(data)} );
-      })
-
-    }
-   }   
+   ]
 };
 
 
@@ -319,14 +283,24 @@ module.exports.plugins = (module.exports.plugins || []).concat([
     allChunks: true    
   }),
 
-  new webpack.optimize.UglifyJsPlugin({
-    compress: false,
-    beautify: true,
-    sourceMap: false,
-    compress: {
-      warnings: false
-    }
-  })
+  // new webpack.optimize.UglifyJsPlugin({
+  //   compress: false,
+  //   beautify: true,
+  //   sourceMap: false,
+  //   compress: {
+  //     warnings: false
+  //   }
+  // })
+
+  new UglifyJsParallelPlugin({
+    workers: os.cpus().length,
+    mangle: true,
+    compressor: {
+      warnings: false,
+      drop_console: true,
+      drop_debugger: true
+     }
+  })  
 
 ])
 

@@ -7,6 +7,8 @@ const path = require('path')
 const open = require("child_process")
 const webpack = require('webpack')
 const glob = require('glob')  //允许使用*等符号匹配对应规则的文件.
+const HappyPack = require('happypack')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 
 //https://github.com/nuysoft/Mock/wiki/Getting-Started
 const Mock = require('mockjs')
@@ -16,7 +18,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const staticToBuild = require('./lib/staticToBuild')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
-
+const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
 
 process.traceDeprecation = true
 
@@ -93,11 +95,11 @@ module.exports = {
       {
         test: /\.js$/,
         enforce: "pre",  //module.preLoaders的替代方案
-        loader: "eslint-loader", //https://github.com/MoOx/eslint-loader
+        loader: "happypack/loader?id=eslint", //https://github.com/MoOx/eslint-loader
         include: [
           APP_PATH
         ]            
-      },    
+      },   
       {
           "test": /\.vue$/,   // ExtractTextPlugin https://github.com/vuejs/vue-loader/issues/622
           "loader": "vue-loader",
@@ -183,10 +185,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,  //排除node_modules文件夹
         use: {
-          loader: 'babel-loader?cacheDirectory',
-          options: {
-            presets: ['es2015','stage-2']
-          }
+          loader: 'happypack/loader?id=js'
+          // options: {
+          //   presets: ['es2015','stage-2']
+          // }
         },        
         include: [
           APP_PATH
@@ -300,7 +302,22 @@ module.exports = {
           // minChunks: Infinity
           minChunks: Object.keys(entries).length // 提取所有entry共同依赖的模块
       }),
+      
+      new HappyPack({
+        id: 'js',
+        loaders: [ 'babel-loader?cacheDirectory=true&presets[]=es2015&presets[]=stage-2' ],
+        threadPool: happyThreadPool,
+        cache: true,
+        verbose: true        
+      }),
 
+      new HappyPack({
+        id: 'eslint',
+        loaders: [ 'eslint-loader' ],
+        threadPool: happyThreadPool,
+        cache: true,
+        verbose: true        
+      })    
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
       // }),

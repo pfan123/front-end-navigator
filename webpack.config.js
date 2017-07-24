@@ -96,7 +96,7 @@ module.exports = {
       {
         test: /\.js$/,
         enforce: "pre",  //module.preLoaders的替代方案
-        loader: "eslint-loader", //https://github.com/MoOx/eslint-loader
+        loader: "happypack/loader?id=eslint", //https://github.com/MoOx/eslint-loader
         include: [
           APP_PATH
         ]            
@@ -199,7 +199,7 @@ module.exports = {
           // options: {
           //   presets: ['es2015','stage-2']
           // }
-        },   
+        },  
         include: [
           APP_PATH
         ]        
@@ -296,7 +296,15 @@ module.exports = {
         threadPool: happyThreadPool,
         cache: true,
         verbose: true        
-      })            
+      }),
+
+      new HappyPack({
+        id: 'eslint',
+        loaders: [ 'eslint-loader' ],
+        threadPool: happyThreadPool,
+        cache: true,
+        verbose: true        
+      })              
 
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file

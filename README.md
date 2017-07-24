@@ -102,14 +102,14 @@
 **webpack-uglify-parallel**
 (webpack-uglify-parallel)[https://github.com/tradingview/webpack-uglify-parallel]多线程并行压缩代码，提高效率
 ```
--new webpack.optimize.UglifyJsPlugin({
+- new webpack.optimize.UglifyJsPlugin({
 -   exclude:/\.min\.js$/
 -   mangle:true,
 -   compress: { warnings: false },
 -   output: { comments: false }
--})
+- })
 
-+new UglifyJsParallelPlugin({
++ new UglifyJsParallelPlugin({
 +  workers: os.cpus().length,
 +  mangle: true,
 +  compressor: {
@@ -117,7 +117,7 @@
 +    drop_console: true,
 +    drop_debugger: true
 +   }
-+})
++ })
 
 ```
 
@@ -136,7 +136,7 @@
 >主要有两种方式：babel-runtime 和 babel-polyfill
 
 `问题4`：
->引入happypack多进程构建，提升构建效率。配置 new HappyPack， 提示报错HappyPack: plugin for the loader '1' could not be found
+>引入[happypack](https://github.com/amireh/happypack)多进程构建，提升构建效率。配置 new HappyPack， 提示报错HappyPack: plugin for the loader '1' could not be found
 >必须要增加new HappyPack({id:1})，有点不明白
 >解决问题，是由于替换当前loader未去掉其中options导致
 ```

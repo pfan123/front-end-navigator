@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-07-11)
+# 1.1.0 (2017-07-24)
 
 
 ### Bug Fixes
@@ -12,6 +12,7 @@
 
 * **bable:** add bable-polyfill and babel-preset-stage-2 ([69514cb](https://github.com/pfan123/front-end-navigator/commit/69514cb))
 * **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
+* **happypack:** add happypack and UglifyJsParallelPlugin and babel-polyfill提高性能 ([afc2c98](https://github.com/pfan123/front-end-navigator/commit/afc2c98))
 * **modifyreadme:** add webpack in readme ([ea8b9b8](https://github.com/pfan123/front-end-navigator/commit/ea8b9b8))
 * **test:** test new Vue and components different ([51ae20d](https://github.com/pfan123/front-end-navigator/commit/51ae20d))
 * **update:** adjustment webpack3.0 config ([e2e97d5](https://github.com/pfan123/front-end-navigator/commit/e2e97d5))
