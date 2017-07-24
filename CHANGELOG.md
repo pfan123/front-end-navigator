@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+* **modify:** modify readme.md ([2606e7d](https://github.com/pfan123/front-end-navigator/commit/2606e7d))
 * **modify:** modify webpack.dev.config.js webpack.prod.config.js readme.md ([0e01f24](https://github.com/pfan123/front-end-navigator/commit/0e01f24))
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
 * **readme:** modify readme makedown ([592147d](https://github.com/pfan123/front-end-navigator/commit/592147d))

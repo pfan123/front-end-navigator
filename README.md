@@ -119,6 +119,8 @@
 + })
 
 ```
+[webpack-bundle-analyzer](https://github.com/th0r/webpack-bundle-analyzer)将内容束展示为方便交互的树状图的Webpack插件和CLI实用工具。
+
 
 ## 更新升级到webpack 3.1
 
@@ -158,6 +160,8 @@ new HappyPack({
 })          
 
 ```
+
+[基于webpack Code Splitting实现react组件的按需加载](https://zhuanlan.zhihu.com/p/26228500)
 
 [Babel下的ES6兼容性与规范](http://imweb.io/topic/561f9352883ae3ed25e400f5)
 

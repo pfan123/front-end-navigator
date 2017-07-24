@@ -3,12 +3,13 @@ import Vue from 'vue'
 import AV from 'av'
 import VueRouter from 'vue-router'
 import App from './components/admin.vue'
-import Login from './components/login.vue'
-import Register from './components/register.vue'
-import Edit from './components/edit.vue'
+// import Login from './components/login.vue'
+// import Register from './components/register.vue'
+// import Edit from './components/edit.vue'
 import {checkType, sessionPosition, unqie} from './utils/util'
 import initLeanCloud from './utils/initLeanCloud'
 import "babel-polyfill"
+
 
 // HMR interface
 if(module.hot) {
@@ -17,6 +18,29 @@ if(module.hot) {
 }
 
 Vue.use(VueRouter)
+
+//路由懒加载
+const Login = resolve => {
+  // require.ensure 是 Webpack 的特殊语法，用来设置 code-split point
+  // （代码分块）
+  require.ensure(['./components/login.vue'], () => {
+    resolve( require('./components/login.vue') )
+  })
+}
+
+const Register = resolve => {
+  require.ensure(['./components/register.vue'], () => {
+    resolve( require('./components/register.vue') )
+  })
+}
+
+const Edit = resolve => {
+  require.ensure(['./components/edit.vue'], () => {
+    resolve( require('./components/edit.vue') )
+  })
+}
+
+
 
 const routes = [
   { path: '/login', component: Login },

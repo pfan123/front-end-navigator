@@ -13,6 +13,7 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 //https://github.com/nuysoft/Mock/wiki/Getting-Started
 const Mock = require('mockjs')
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -304,7 +305,38 @@ module.exports = {
         threadPool: happyThreadPool,
         cache: true,
         verbose: true        
-      })              
+      }),
+      new BundleAnalyzerPlugin({
+        // Can be `server`, `static` or `disabled`.
+        // In `server` mode analyzer will start HTTP server to show bundle report.
+        // In `static` mode single HTML file with bundle report will be generated.
+        // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
+        analyzerMode: 'server',
+        // Host that will be used in `server` mode to start HTTP server.
+        analyzerHost: '127.0.0.1',
+        // Port that will be used in `server` mode to start HTTP server.
+        analyzerPort: 8888,
+        // Path to bundle report file that will be generated in `static` mode.
+        // Relative to bundles output directory.
+        reportFilename: 'report.html',
+        // Module sizes to show in report by default.
+        // Should be one of `stat`, `parsed` or `gzip`.
+        // See "Definitions" section for more information.
+        defaultSizes: 'parsed',
+        // Automatically open report in default browser
+        openAnalyzer: true,
+        // If `true`, Webpack Stats JSON file will be generated in bundles output directory
+        generateStatsFile: false,
+        // Name of Webpack Stats JSON file that will be generated if `generateStatsFile` is `true`.
+        // Relative to bundles output directory.
+        statsFilename: 'stats.json',
+        // Options for `stats.toJson()` method.
+        // For example you can exclude sources of your modules from stats file with `source: false` option.
+        // See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+        statsOptions: null,
+        // Log level. Can be 'info', 'warn', 'error' or 'silent'.
+        logLevel: 'info'
+      })                    
 
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
@@ -321,14 +353,14 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'dist/'),  //访问localhost:xxx 浏览器能看到的目录
     host: getLocalIP(),
     port: 9999,
-    noInfo: true,
+    noInfo: false,
     quiet: false,
     //inline: true, //内联模式(inline mode)有两种方式：命令行方式和Node.js API
     historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
     open: true,
     hot: true,  //Hot Module Replacement, 启用 webpack 的模块热替换特性，结合插件 new webpack.HotModuleReplacementPlugin()
     compress: true,
-    stats: "errors-only",
+    // stats: "errors-only",
     // hotOnly: true,
     setup: function (app){
  

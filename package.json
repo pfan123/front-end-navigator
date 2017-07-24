@@ -12,7 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node app",
     "build": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.config.js --colors",
-    "build:prod": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.prod.config.js --colors"
+    "build:prod": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.prod.config.js --colors",
+    "analyzer": "webpack --profile --json > stats.json"
   },
   "author": "@pfan",
   "license": "ISC",
@@ -69,6 +70,7 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.0",
     "webpack": "^3.3.0",
+    "webpack-bundle-analyzer": "^2.8.3",
     "webpack-dev-server": "^2.5.0",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-uglify-parallel": "^0.1.3"
