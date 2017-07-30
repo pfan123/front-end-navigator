@@ -335,7 +335,7 @@ module.exports = {
 Object.keys(entries).map( (name) => {
   var plugin = new HtmlWebpackPlugin({
         filename: name + '.html',
-        template: path.join(APP_PATH, name+'.shtml'),
+        template: path.join(APP_PATH, name+'.html'),
         inject: true,
         chunks: ["vendors", name],
         showErrors: true,

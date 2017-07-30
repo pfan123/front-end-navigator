@@ -11,3 +11,4 @@ client.js
 tcp.js
 .happypack
 app/doc/utils/sw.js
+app/doc/manifest.json

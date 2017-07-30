@@ -306,6 +306,12 @@ module.exports = {
         cache: true,
         verbose: true        
       }),
+
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require(path.join(APP_PATH, 'manifest.json'))
+      }),
+
       new BundleAnalyzerPlugin({
         // Can be `server`, `static` or `disabled`.
         // In `server` mode analyzer will start HTTP server to show bundle report.
@@ -466,7 +472,7 @@ if (process.env.NODE_ENV === 'production') {
     //   compress: {
     //     warnings: false
     //   }
-    // })
+    // })   
     
     //多线程压缩 
     new UglifyJsParallelPlugin({
@@ -508,7 +514,7 @@ if (process.env.NODE_ENV === 'production') {
 Object.keys(entries).map( (name) => {
   var plugin = new HtmlWebpackPlugin({
         filename: name + '.html',
-        template: path.join(APP_PATH, name+'.shtml'),
+        template: path.join(APP_PATH, name+'.html'),
         inject: true,
         chunks: ["vendors", name],
         showErrors: true,

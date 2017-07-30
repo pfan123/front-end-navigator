@@ -11,7 +11,9 @@
     "prod": "cross-env webpack-dev-server --colors --progress --config webpack.prod.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node app",
-    "build": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.config.js --colors",
+    "rm": "rm -rf ./dist",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --colors",
+    "build:dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js --colors",
     "build:prod": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.prod.config.js --colors",
     "analyzer": "webpack --profile --json > stats.json"
   },
@@ -59,6 +61,7 @@
     "sass-loader": "^6.0.3",
     "scss-loader": "0.0.1",
     "style-loader": "^0.17.0",
+    "sw-precache-webpack-plugin": "^0.11.4",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "url-loader": "^0.5.9",
     "validate-commit-msg": "^2.12.2",
