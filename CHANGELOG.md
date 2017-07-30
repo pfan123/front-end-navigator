@@ -13,7 +13,10 @@
 ### Features
 
 * **add:** 增加webpack-bundle-analyzer分析bundle，vue2.0 路由懒加载 ([e3d9ab2](https://github.com/pfan123/front-end-navigator/commit/e3d9ab2))
+<<<<<<< HEAD
 * **addDll:** 增加DllPlugin 与 DllReferencePlugin优化构建打包速度 ([061004e](https://github.com/pfan123/front-end-navigator/commit/061004e))
+=======
+>>>>>>> e1debb5d48f9d97bc07c09966db2a5ab9deaa09e
 * **bable:** add bable-polyfill and babel-preset-stage-2 ([69514cb](https://github.com/pfan123/front-end-navigator/commit/69514cb))
 * **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
 * **happypack:** add happypack and UglifyJsParallelPlugin and babel-polyfill提高性能 ([afc2c98](https://github.com/pfan123/front-end-navigator/commit/afc2c98))

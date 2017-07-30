@@ -1,5 +1,5 @@
 import styles from "./sass/style.s.scss"
-import Vue from 'vue'
+// import Vue from 'vue'
 import AV from 'av'
 import VueRouter from 'vue-router'
 import App from './components/admin.vue'
