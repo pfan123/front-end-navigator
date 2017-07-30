@@ -121,6 +121,21 @@
 ```
 [webpack-bundle-analyzer](https://github.com/th0r/webpack-bundle-analyzer)将内容束展示为方便交互的树状图的Webpack插件和CLI实用工具。
 
+[DllPlugin 与 DllReferencePlugin](https://webpack.js.org/plugins/dll-plugin/)
+使用DllPlugin和DllReferencePlugin预编译, 通过前置这些依赖包的构建，来提高真正的 build 和 rebuild 的构建效率。
+
+```
+new webpack.DllPlugin({
+    path: path.join(APP_PATH, 'manifest.json'),
+	name: "[name]_library",
+	context: __dirname
+})
+
+new webpack.DllReferencePlugin({
+	context: __dirname,
+	manifest: require(path.join(APP_PATH, 'manifest.json'))
+})
+```
 
 ## 更新升级到webpack 3.1
 
