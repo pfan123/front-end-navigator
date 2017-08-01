@@ -13,19 +13,18 @@
 ### Features
 
 * **add:** 增加webpack-bundle-analyzer分析bundle，vue2.0 路由懒加载 ([e3d9ab2](https://github.com/pfan123/front-end-navigator/commit/e3d9ab2))
-<<<<<<< HEAD
 * **addDll:** 增加DllPlugin 与 DllReferencePlugin优化构建打包速度 ([061004e](https://github.com/pfan123/front-end-navigator/commit/061004e))
-=======
->>>>>>> e1debb5d48f9d97bc07c09966db2a5ab9deaa09e
 * **bable:** add bable-polyfill and babel-preset-stage-2 ([69514cb](https://github.com/pfan123/front-end-navigator/commit/69514cb))
 * **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
 * **happypack:** add happypack and UglifyJsParallelPlugin and babel-polyfill提高性能 ([afc2c98](https://github.com/pfan123/front-end-navigator/commit/afc2c98))
 * **modifyreadme:** add webpack in readme ([ea8b9b8](https://github.com/pfan123/front-end-navigator/commit/ea8b9b8))
+* **separation:** 分离VUE到页面script引入，减少打包大小 ([e1debb5](https://github.com/pfan123/front-end-navigator/commit/e1debb5))
 * **test:** test new Vue and components different ([51ae20d](https://github.com/pfan123/front-end-navigator/commit/51ae20d))
 * **update:** adjustment webpack3.0 config ([e2e97d5](https://github.com/pfan123/front-end-navigator/commit/e2e97d5))
 * **update:** update modules ([a401eda](https://github.com/pfan123/front-end-navigator/commit/a401eda))
 * **update:** update webpack3.0 ([890e4fc](https://github.com/pfan123/front-end-navigator/commit/890e4fc))
 * **update:** update webpack3.1.0 add koa2+koa-webpack-middleware ([34dff03](https://github.com/pfan123/front-end-navigator/commit/34dff03))
+* **修改readme:** 增加优化点文档 ([9051429](https://github.com/pfan123/front-end-navigator/commit/9051429))
 
 
 

@@ -9,7 +9,7 @@ const webpack = require('webpack')
 const glob = require('glob')  //允许使用*等符号匹配对应规则的文件.
 const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
-
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 //https://github.com/nuysoft/Mock/wiki/Getting-Started
 const Mock = require('mockjs')
 
@@ -311,6 +311,23 @@ module.exports = {
         context: __dirname,
         manifest: require(path.join(APP_PATH, 'manifest.json'))
       }),
+
+      new SWPrecacheWebpackPlugin(
+        {
+          cacheId: 'APP_NAME',
+          dontCacheBustUrlsMatching: /\.\w{8}\./,
+          filename: 'service-worker.js',
+          // minify: true,
+          // navigateFallback: PUBLIC_PATH + 'index.html',
+          staticFileGlobsIgnorePatterns: [
+            /index\.html$/,
+            /\.map$/,
+            /\.css$/,
+            /\.svg$/,
+            /\.eot$/
+          ]
+        }
+      ),
 
       new BundleAnalyzerPlugin({
         // Can be `server`, `static` or `disabled`.
