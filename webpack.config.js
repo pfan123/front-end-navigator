@@ -322,9 +322,9 @@ module.exports = {
           staticFileGlobsIgnorePatterns: [
             /\.html$/,
             /\.map$/,
-            /\.css$/,
-            /\.svg$/,
-            /\.eot$/
+            // /\.css$/,
+            // /\.svg$/,
+            // /\.eot$/
           ]
         }
       ),

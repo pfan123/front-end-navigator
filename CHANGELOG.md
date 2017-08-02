@@ -25,6 +25,7 @@
 * **update:** update modules ([a401eda](https://github.com/pfan123/front-end-navigator/commit/a401eda))
 * **update:** update webpack3.0 ([890e4fc](https://github.com/pfan123/front-end-navigator/commit/890e4fc))
 * **update:** update webpack3.1.0 add koa2+koa-webpack-middleware ([34dff03](https://github.com/pfan123/front-end-navigator/commit/34dff03))
+* **修改readme:** 修改readme ([248f806](https://github.com/pfan123/front-end-navigator/commit/248f806))
 * **修改readme:** 增加优化点文档 ([9051429](https://github.com/pfan123/front-end-navigator/commit/9051429))
 
 

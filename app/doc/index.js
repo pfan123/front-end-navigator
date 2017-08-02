@@ -14,9 +14,15 @@ import initLeanCloud from './utils/initLeanCloud'
 
 import "babel-polyfill"
 
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js');
-}
+//注册 Service Worker 来启动安装
+navigator.serviceWorker && navigator.serviceWorker.register('/service-worker.js').then(() => {
+  console.log("22222")
+    navigator.serviceWorker.addEventListener('message', e => {
+        if (e.data === 'sw.update') {
+          window.location.reload()
+        }
+    });
+});    
 
 // HMR interface
 if(module.hot) {
