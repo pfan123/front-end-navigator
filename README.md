@@ -176,6 +176,11 @@ new HappyPack({
 
 ```
 
+`问题5`： 
+> 在linux下执行sh文件时提示下面信息： -bash: ./xx.sh: Permission denied
+> 出现情况是由于，文件权限导致，chmod 777 xx.sh即可
+
+
 [基于webpack Code Splitting实现react组件的按需加载](https://zhuanlan.zhihu.com/p/26228500)
 
 [Babel下的ES6兼容性与规范](http://imweb.io/topic/561f9352883ae3ed25e400f5)

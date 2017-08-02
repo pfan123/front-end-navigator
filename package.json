@@ -15,7 +15,8 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --colors",
     "build:dll": "cross-env NODE_ENV=production webpack --config webpack.dll.config.js --colors",
     "build:prod": "rm -rf ./dist && cross-env NODE_ENV=production webpack --config webpack.prod.config.js --colors",
-    "analyzer": "webpack --profile --json > stats.json"
+    "analyzer": "webpack --profile --json > stats.json",
+    "publish": "node publish"
   },
   "author": "@pfan",
   "license": "ISC",

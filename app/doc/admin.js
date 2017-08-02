@@ -10,6 +10,9 @@ import {checkType, sessionPosition, unqie} from './utils/util'
 import initLeanCloud from './utils/initLeanCloud'
 import "babel-polyfill"
 
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js');
+}
 
 // HMR interface
 if(module.hot) {

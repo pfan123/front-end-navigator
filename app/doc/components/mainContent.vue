@@ -29,7 +29,7 @@
 <script>
 import  goTop  from "./goTop.vue"
 import  floating  from "./floating.vue"
-import {checkType, sessionPosition} from '../utils/util'
+import {checkType, sessionPosition, throttle} from '../utils/util'
 
 export default {
   name: 'app',
@@ -40,7 +40,8 @@ export default {
       timer: "",
       isback: false,
       isFloatingShow: true,
-      setTimer: ''      
+      setTimer: '',
+      isScrollAction: true      
     }
   },
   components: {
@@ -82,8 +83,6 @@ export default {
     this.isShow = true  
     let self = this
 
-
-
     //存储session
     let isOnIOS = navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)
     let eventName = isOnIOS ? "pagehide" : "beforeunload"
@@ -96,9 +95,25 @@ export default {
       let dis 
       clearInterval(self.timer)
       clearInterval(self.setTimer)
+      self.isScrollAction = false
+
+      //设置300ms延迟去区分点击和滑动对状态改变
+      function setTimer(){
+          setTimeout(()=> {
+            self.isScrollAction = true
+          }, 300)        
+      }
+
+      let gap
+      if(document.documentElement.clientWidth <= 640){
+        gap = 8
+      }else{
+        gap = 15
+      }
       
+
       if(self.$refs.scrollDom.scrollTop - self.$refs.tabDivs[id].offsetTop !== 0){
-        dis = Math.abs(self.$refs.scrollDom.scrollTop - self.$refs.tabDivs[id].offsetTop) / 20
+        dis = Math.abs(self.$refs.scrollDom.scrollTop - self.$refs.tabDivs[id].offsetTop) / gap
 
         if(self.$refs.scrollDom.scrollTop > self.$refs.tabDivs[id].offsetTop){
           self.timer = setInterval( () =>{
@@ -106,6 +121,7 @@ export default {
               self.$refs.scrollDom.scrollTop -= dis
             }else{
               self.$refs.scrollDom.scrollTop = self.$refs.tabDivs[id].offsetTop
+              setTimer()
               clearInterval(self.timer)
             }
 
@@ -116,6 +132,7 @@ export default {
               self.$refs.scrollDom.scrollTop += dis
             }else{
               self.$refs.scrollDom.scrollTop = self.$refs.tabDivs[id].offsetTop
+              setTimer()
               clearInterval(self.timer)
             }
 
@@ -123,8 +140,9 @@ export default {
         }
 
         self.setTimer = setTimeout( () => {
+          setTimer()
           clearInterval(self.timer)
-        }, 1000/3)        
+        }, 1000/4)        
      
       }
 
@@ -133,14 +151,38 @@ export default {
     })
 
     this.$nextTick( () => {
-      self.$refs.scrollDom.addEventListener("scroll", () => {
+      self.$refs.scrollDom.addEventListener("scroll", throttle(() => {
           let top = self.$refs.scrollDom.scrollTop
+          let activeIdx = 0
+
+          if(!self.isScrollAction){
+            if( top > 800){
+              self.isback = true
+            }else{
+              self.isback = false
+            }    
+            return    
+          }
+
+          self.$refs.tabDivs.forEach( (item, index) => {
+            if( top >= item.offsetTop ){
+              activeIdx = index
+              return;
+            }
+          })
+
+          if(top >= self.$refs.scrollDom.scrollHeight - document.documentElement.clientHeight + 36){
+            activeIdx = self.$refs.tabDivs.length - 1
+          }
+
+          middleVue.$emit('scroll-tab', activeIdx)
+
           if( top > 800){
             self.isback = true
           }else{
             self.isback = false
           }
-      }, false)       
+        }, 300, false ), false)       
     } )
 
   },
@@ -285,5 +327,33 @@ export default {
     width: 24%;
   }
 }  
+@media screen and (max-width: 640px){
+  .main_content{
+    left: 0;
+    top: 40px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .main_content—section{
+    padding: 10px;
+    h2{
+      left: 10px;
+      right: 10px;
+    }
+    div{
+      display: flex;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      padding: 16px 10px 0;
+      >a{
+        display: block;
+        width: calc(96%/2);
+        margin: 0 0 10px 0;
+        &:nth-child(2n){
+          margin-left: 4%;
+        }
+      }
+    }
+  }
 
+}
 </style>

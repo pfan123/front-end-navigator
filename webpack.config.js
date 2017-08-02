@@ -317,10 +317,10 @@ module.exports = {
           cacheId: 'APP_NAME',
           dontCacheBustUrlsMatching: /\.\w{8}\./,
           filename: 'service-worker.js',
-          // minify: true,
+          minify: true,
           // navigateFallback: PUBLIC_PATH + 'index.html',
           staticFileGlobsIgnorePatterns: [
-            /index\.html$/,
+            /\.html$/,
             /\.map$/,
             /\.css$/,
             /\.svg$/,

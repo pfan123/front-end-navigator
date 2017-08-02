@@ -1,9 +1,9 @@
 <template>
   <div class="sideleft">
       <h1><a href="">前端导航平台</a></h1>
-      <div class="sideleft_nav-item">
+      <div :class="[nav.length>2 ? 'sideleft_nav-item' : 'sideleft_nav-item flex']" ref ="scrollTabWp" >
         <template v-for = "(item, index) in nav">
-          <a :class="{on: index == active}" href="javascript:;"  @click= "selectTab(index)">{{item.cateTitle}}</a>
+            <a :class="{on: index == active}" href="javascript:;"  @click= "selectTab(index)" ref ="scrollTab">{{item.cateTitle}}</a>
         </template>
       </div>
       <a class="sideleft_navbot" href="//github.com/pfan123/front-end-navigator" target="_blank"><i></i>关于作者</a>
@@ -31,7 +31,11 @@ export default {
         self.nav = window.response
         if((new sessionPosition()).getSession().active){
           self.active = (new sessionPosition()).getSession().active
-        }        
+        }    
+
+        if((new sessionPosition()).getSession().scrollLeft){
+          self.$refs.scrollTabWp.scrollLeft = (new sessionPosition()).getSession().scrollLeft
+        }    
       }
     }, 100)
     
@@ -42,14 +46,39 @@ export default {
       let eventName = isOnIOS ? "pagehide" : "beforeunload"
       let self = this
       window.addEventListener(eventName, () => {
-        (new sessionPosition()).sessionStorage( {active: self.active})
+        (new sessionPosition()).sessionStorage( {active: self.active});
+
+        (new sessionPosition()).sessionStorage( {scrollLeft: self.$refs.scrollTabWp.scrollLeft});
       }, false)
+
+      middleVue.$on('scroll-tab', idx => {
+        self.active = idx
+        self.tabMove()
+      })
   },
 
   methods: {
     selectTab (index) {
       this.active = index
       middleVue.$emit('change-tab', index)
+      this.tabMove()
+    },
+
+    tabMove () {
+      if(document.documentElement.clientWidth <= 640){
+        let left = this.$refs.scrollTabWp.scrollLeft
+
+        if(this.$refs.scrollTab.length <=3)return
+
+        if(this.active > 1 && this.active < this.$refs.scrollTab.length - 2){
+          this.$refs.scrollTabWp.scrollLeft = this.$refs.scrollTab[0].clientWidth*(this.active-1)
+        }else if(this.active <= 1 ){
+          this.$refs.scrollTabWp.scrollLeft = 0
+        }else if( this.active >= this.$refs.scrollTab.length - 2){
+          this.$refs.scrollTabWp.scrollLeft = this.$refs.scrollTab[0].clientWidth * (this.$refs.scrollTab.length-1)
+        }
+
+      }
     }
   },
 
@@ -151,5 +180,50 @@ $color_red: red;
     url("../fonts/webfont.svg#webfont") format("svg"); /* iOS 4.1- */
     font-style: normal;
     font-weight: normal;
+}
+
+@media screen and (max-width: 640px){
+  .sideleft{
+      width: 100%;
+      height: 40px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: auto;
+      z-index: 3;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      overflow-x: auto;
+      h1{
+        display: none;
+      }
+      .sideleft_navbot{
+        display: none;
+      }
+    &_nav-item{
+      position: static;
+      top: 0;
+      bottom: auto;  
+      &.flex{
+        width: 100%;
+        display: flex;
+        a{
+          flex: 1;
+        }
+      }
+      a{
+        display: inline-block;
+        padding-left: 0;
+        width: calc(100%/3);
+        text-align: center;
+        height: 38px;
+        line-height: 40px;
+        &.on{
+          border-left: 0;
+          border-bottom: 2px solid #E4393C;
+        }
+      }
+    }
+  }
 }
 </style>

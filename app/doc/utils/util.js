@@ -123,3 +123,81 @@ export const cleanArr = function (arr) {
 	}
 	return arr; 
 }
+
+
+
+/**
+*  闭包共享timer
+* @param fn {Function}   实际要执行的函数
+* @param threshhold {Number}  执行间隔，单位是毫秒（ms）
+* @param type {String}  是否第一次执行
+* @return {Function}     返回一个“节流”函数
+*/
+export const throttle = (fn, threshhold, type) =>  {
+
+  // 记录是否可执行
+  let isRun = true;
+
+  // 定时器
+  let timer;
+
+  type = type || true;
+
+  // 默认间隔为 200ms
+  threshhold || (threshhold = 200)
+
+  // 返回的函数，每过 threshhold 毫秒就执行一次 fn 函数
+  return function () {
+
+    // 保存函数调用时的上下文和参数，传递给 fn
+    let context = this;
+    let args = arguments;
+
+    //第一次执行
+    if(type && 'undefined' == typeof timer){
+    	fn()  
+    }
+
+    if(!isRun)return;
+
+    isRun = false;
+
+    //保证间隔时间内执行
+	timer = setTimeout(function () {
+	   fn.apply(context, args)
+	   isRun = true;
+	}, threshhold)    
+
+  }
+}
+
+
+/**
+ *
+ * @param fn {Function}   实际要执行的函数
+ * @param delay {Number}  延迟时间，单位是毫秒（ms）
+ *
+ * @return {Function}     返回一个“防反跳 debounce”了的函数
+ */
+export const debounce = (fn, delay) => {
+
+  // 定时器，用来 setTimeout
+  let timer
+
+  // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+  return function () {
+
+    // 保存函数调用时的上下文和参数，传递给 fn
+    let context = this
+    let args = arguments
+
+    // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+    clearTimeout(timer)
+
+    // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+    // 再过 delay 毫秒就执行 fn
+    timer = setTimeout(function () {
+      fn.apply(context, args)
+    }, delay || 0)
+  }
+}

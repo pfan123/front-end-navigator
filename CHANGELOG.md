@@ -1,9 +1,10 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-07-30)
+# 1.1.0 (2017-08-02)
 
 
 ### Bug Fixes
 
+* **conflict:** 修复合并引起的冲突 ([c46b88c](https://github.com/pfan123/front-end-navigator/commit/c46b88c))
 * **modify:** modify readme.md ([2606e7d](https://github.com/pfan123/front-end-navigator/commit/2606e7d))
 * **modify:** modify webpack.dev.config.js webpack.prod.config.js readme.md ([0e01f24](https://github.com/pfan123/front-end-navigator/commit/0e01f24))
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))

@@ -4,6 +4,7 @@
 
 html, body{
 	height: 100%;
+	touch-action: manipulation; //取消300ms延迟，chrome和safari
 }
 
 /**

@@ -10,5 +10,7 @@ app/test/**
 client.js
 tcp.js
 .happypack
+publish.sh
+publish.js
 app/doc/utils/sw.js
 app/doc/manifest.json
