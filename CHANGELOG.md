@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-08-02)
+# 1.1.0 (2017-08-03)
 
 
 ### Bug Fixes
@@ -27,6 +27,7 @@
 * **update:** update webpack3.1.0 add koa2+koa-webpack-middleware ([34dff03](https://github.com/pfan123/front-end-navigator/commit/34dff03))
 * **修改readme:** 修改readme ([248f806](https://github.com/pfan123/front-end-navigator/commit/248f806))
 * **修改readme:** 增加优化点文档 ([9051429](https://github.com/pfan123/front-end-navigator/commit/9051429))
+* **增加service:** 增加service-worker变更通知更新 ([4852f35](https://github.com/pfan123/front-end-navigator/commit/4852f35))
 
 
 

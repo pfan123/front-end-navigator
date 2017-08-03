@@ -137,6 +137,13 @@ new webpack.DllReferencePlugin({
 })
 ```
 
+[sw-precache-webpack-plugin](https://github.com/goldhand/sw-precache-webpack-plugin)工具，生成service-worker caches列表
+
+[sw-toolbox](https://github.com/GoogleChrome/sw-toolbox) 预缓存 Precaching，构建阶段检测任何本地资源是否已更改，自动更新缓存列表
+
+[sw-precache](https://github.com/GoogleChrome/sw-precache) 运行时缓存 Runtime caching，不提供额外的缓存更新机制，需要设置匹配文件的请求并使用适当的处理
+   程序的路由
+
 ## 更新升级到webpack 3.1
 
 `问题1`：

@@ -318,6 +318,7 @@ module.exports = {
           dontCacheBustUrlsMatching: /\.\w{8}\./,
           filename: 'service-worker.js',
           minify: true,
+          // staticFileGlobs: ['./dist/'],
           // navigateFallback: PUBLIC_PATH + 'index.html',
           staticFileGlobsIgnorePatterns: [
             /\.html$/,
