@@ -89,7 +89,7 @@ module.exports = {
     // publicPath: 'http://localhost:9999/',
     // publicPath: '/',
     filename: '[name].js',     //name，对应entry名称
-    chunkFilename: "[id].chunk.js"
+    chunkFilename: "[name].[chunkhash:8].js"
   },
 
   module: {
@@ -214,7 +214,7 @@ module.exports = {
         loader: 'file-loader',
         options: {
           limit: 10000,
-          name: './images/[name].[ext]?[hash]'   //devServer预览都是相对dist输出目录
+          name: './images/[name].[hash:8].[ext]'   //devServer预览都是相对dist输出目录
         },
         include: [
           APP_IMAGES
@@ -274,7 +274,7 @@ module.exports = {
       // 当模块热替换(HMR)时在浏览器控制台输出对用户更友好的模块名字信息
       new webpack.NamedModulesPlugin(),
 
-      new webpack.optimize.ModuleConcatenationPlugin(), //减少模块闭包函数数量从而加快JS的执行速度
+      new webpack.optimize.ModuleConcatenationPlugin(), //Scope Hoisting 作用域提升 减少模块闭包函数数量从而加快JS的执行速度
 
       new ImageminPlugin({
         disable: process.env.NODE_ENV !== 'production', // Disable during development
@@ -449,7 +449,7 @@ if (process.env.NODE_ENV === 'production') {
   //       ]        
   //     }
   // ])
-
+  module.exports.output.filename = '[name].[hash:8].js'
   module.exports.module.rules =  (module.exports.module.rules || []).concat([
       {
         test: /\.(css|scss)$/,

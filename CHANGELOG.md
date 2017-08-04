@@ -22,6 +22,7 @@
 * **separation:** 分离VUE到页面script引入，减少打包大小 ([e1debb5](https://github.com/pfan123/front-end-navigator/commit/e1debb5))
 * **test:** test new Vue and components different ([51ae20d](https://github.com/pfan123/front-end-navigator/commit/51ae20d))
 * **update:** adjustment webpack3.0 config ([e2e97d5](https://github.com/pfan123/front-end-navigator/commit/e2e97d5))
+* **update:** update changelog ([79789f6](https://github.com/pfan123/front-end-navigator/commit/79789f6))
 * **update:** update modules ([a401eda](https://github.com/pfan123/front-end-navigator/commit/a401eda))
 * **update:** update webpack3.0 ([890e4fc](https://github.com/pfan123/front-end-navigator/commit/890e4fc))
 * **update:** update webpack3.1.0 add koa2+koa-webpack-middleware ([34dff03](https://github.com/pfan123/front-end-navigator/commit/34dff03))
