@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-08-03)
+# 1.1.0 (2017-08-04)
 
 
 ### Bug Fixes
@@ -7,6 +7,7 @@
 * **conflict:** 修复合并引起的冲突 ([c46b88c](https://github.com/pfan123/front-end-navigator/commit/c46b88c))
 * **modify:** modify readme.md ([2606e7d](https://github.com/pfan123/front-end-navigator/commit/2606e7d))
 * **modify:** modify webpack.dev.config.js webpack.prod.config.js readme.md ([0e01f24](https://github.com/pfan123/front-end-navigator/commit/0e01f24))
+* **modify:** 修改文件名从时间戳改到hash文件名 ([08993f1](https://github.com/pfan123/front-end-navigator/commit/08993f1))
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
 * **readme:** modify readme makedown ([592147d](https://github.com/pfan123/front-end-navigator/commit/592147d))
 
