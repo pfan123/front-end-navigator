@@ -2,6 +2,7 @@ const path = require('path')
 const os = require("os")
 const webpack = require('webpack')
 const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
+const JavaScriptObfuscator = require('webpack-obfuscator')
 
 //配置启动项目
 const APP_NAME = "doc"
@@ -35,11 +36,16 @@ module.exports = {
 	    new UglifyJsParallelPlugin({
 	      workers: os.cpus().length,
 	      mangle: true,
+          comments: false,
 	      compressor: {
 	        warnings: false,
 	        drop_console: true,
 	        drop_debugger: true
 	       }
-	    })
+	    }),
+        //混淆会导致文件增加
+        // new JavaScriptObfuscator ({
+        //       rotateUnicodeArray: true
+        //   })        
     ]
 }

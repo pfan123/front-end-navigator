@@ -20,6 +20,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const staticToBuild = require('./lib/staticToBuild')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
+const CompressionPlugin = require("compression-webpack-plugin")
 
 console.log(__dirname)
 
@@ -491,12 +492,21 @@ if (process.env.NODE_ENV === 'production') {
     new UglifyJsParallelPlugin({
       workers: os.cpus().length,
       mangle: true,
+      comments: false,
       compressor: {
         warnings: false,
         drop_console: true,
         drop_debugger: true
        }
-    })
+    }),
+
+    // new CompressionPlugin({
+    //   asset: "[path].gz[query]",
+    //   algorithm: "gzip",
+    //   test: /\.(js|html)$/,
+    //   threshold: 10240,
+    //   minRatio: 0.8
+    // })
 
   ])
 }else{

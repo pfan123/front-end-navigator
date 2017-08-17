@@ -57,6 +57,14 @@ export default {
         this.$router.go(1)        
     }
 
+    /**
+     * [本地存储优化]
+     */
+    if(window.localStorage.getItem("docs_data")){
+      let docData = window.localStorage.getItem("docs_data")
+      self.list = JSON.parse(docData)
+    }
+
     let query = new AV.Query('DataTypeDoc')
     query.ascending('createdAt')
     query.limit(1000) 
@@ -89,8 +97,9 @@ export default {
          })
 
          self.list = docData
+         window.localStorage.setItem("docs_data", JSON.stringify(docData))
       }).catch(function(error) {
-        alert("抱歉，数据拉取错误！");
+        throw new Error(JSON.stringify(error))
       }) 
 
   },

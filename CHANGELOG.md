@@ -9,6 +9,7 @@
 * **modify:** modify webpack.dev.config.js webpack.prod.config.js readme.md ([0e01f24](https://github.com/pfan123/front-end-navigator/commit/0e01f24))
 * **modify:** 修改文件名从时间戳改到hash文件名 ([08993f1](https://github.com/pfan123/front-end-navigator/commit/08993f1))
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
+* **readme:** modify readme ([c71390f](https://github.com/pfan123/front-end-navigator/commit/c71390f))
 * **readme:** modify readme makedown ([592147d](https://github.com/pfan123/front-end-navigator/commit/592147d))
 
 

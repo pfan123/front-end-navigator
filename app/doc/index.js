@@ -8,6 +8,7 @@ import AV from 'av'
 import VueResource from 'vue-resource'
 import sideLeftNav from './components/sideLeftNav.vue'
 import mainContent from './components/mainContent.vue'
+import progressBar from './components/progressBar.vue'
 import {checkType, sessionPosition, unqie} from './utils/util'
 // import {data} from './mock/data.js'
 import initLeanCloud from './utils/initLeanCloud'
@@ -35,6 +36,11 @@ if(module.hot) {
 // Vue.use(VueAxios, axios)
 
 window.middleVue = new Vue()
+
+const ProgressBar = new Vue({
+  el: '[vm-mod="progressBar"]',
+  render: h => h(progressBar)
+})
 
 //vm.$el属性 elementOrSelector，元素或选择器
 const vmHeader = new Vue({
@@ -106,6 +112,16 @@ data.map( (item) => {
 let query = new AV.Query('DataTypeDoc')
 query.ascending('createdAt')
 query.limit(1000)  //查询数据默认设置100条
+
+/**
+ * [本地存储优化]
+ */
+if(window.localStorage.getItem("docs_data")){
+  let docData = window.localStorage.getItem("docs_data")
+  window.response = JSON.parse(docData)
+}
+
+
 query.find().then(function (json) {
      json = JSON.parse( JSON.stringify(json, null, 4) )
 
@@ -134,10 +150,10 @@ query.find().then(function (json) {
 	    })     	
      })
 
-     // console.log(docData)
-     window.response = docData
+     if(!window.localStorage.getItem("docs_data"))window.response = docData
+     window.localStorage.setItem("docs_data", JSON.stringify(docData))
   }).catch(function(error) {
-    alert(JSON.stringify(error));
+    throw new Error(JSON.stringify(error))
   })
 
 

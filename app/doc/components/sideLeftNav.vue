@@ -55,6 +55,8 @@ export default {
         self.active = idx
         self.tabMove()
       })
+
+      middleVue.$emit('finish')
   },
 
   methods: {
