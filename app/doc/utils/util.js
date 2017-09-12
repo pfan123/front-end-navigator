@@ -201,3 +201,28 @@ export const debounce = (fn, delay) => {
     }, delay || 0)
   }
 }
+
+
+
+/**
+ * [检测数组中是否有重复元素]
+ * @param  {[type]} arr [数组]
+ * @return {[type]}     [返回bool值]
+ */
+export const isRepeat = (arr) => {
+	let hash = {}; 
+	for(let i in arr) { 
+		if(hash[arr[i]])return true 
+		hash[arr[i]] = true
+	} 
+	return false
+}
+
+/**
+ * [检测是否为整数大于等于0的数值]
+ * @param  {[type]} obj [description]
+ * @return {[type]}     [description]
+ */
+export const isInteger = (obj) => {
+	return typeof obj === 'number' && obj%1 === 0 && obj >= 0
+}

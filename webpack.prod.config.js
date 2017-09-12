@@ -9,7 +9,7 @@ const webpack = require('webpack')
 const glob = require('glob')  //允许使用*等符号匹配对应规则的文件.
 const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
-
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 //https://github.com/nuysoft/Mock/wiki/Getting-Started
 const Mock = require('mockjs')
 
@@ -246,7 +246,20 @@ module.exports = {
         threadPool: happyThreadPool,
         cache: true,
         verbose: true        
-      })  
+      }),
+
+      new SWPrecacheWebpackPlugin(
+        {
+          cacheId: 'APP_NAME',
+          dontCacheBustUrlsMatching: /\.\w{8}\./,
+          filename: 'service-worker.js',
+          minify: true,
+          staticFileGlobsIgnorePatterns: [
+            /\.html$/,
+            /\.map$/
+          ]
+        }
+      )        
 
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file

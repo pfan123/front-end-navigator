@@ -99,8 +99,10 @@ data.map( (item) => {
   dataTypeDoc.set('detail', item.detail);
   dataTypeDoc.set("image", item.image);
   dataTypeDoc.set('link', item.link);
+  dataTypeDoc.set('index', item.index);
   objects.push(dataTypeDoc)
 } )
+
  // 批量创建（更新）
 // AV.Object.saveAll(objects).then(function (objects) {
 //   // 成功
@@ -110,7 +112,7 @@ data.map( (item) => {
 // });
 
 let query = new AV.Query('DataTypeDoc')
-query.ascending('createdAt')
+query.ascending('index')
 query.limit(1000)  //查询数据默认设置100条
 
 /**
@@ -120,7 +122,6 @@ if(window.localStorage.getItem("docs_data")){
   let docData = window.localStorage.getItem("docs_data")
   window.response = JSON.parse(docData)
 }
-
 
 query.find().then(function (json) {
      json = JSON.parse( JSON.stringify(json, null, 4) )
@@ -132,9 +133,8 @@ query.find().then(function (json) {
      })
 
      cateArr = unqie(cateArr)
-     
-     cateArr.map((item, idx) => {
-     	docData[idx] = {"cateTitle": item, data: []}
+     cateArr.forEach((item, idx) => {
+     	docData[idx] = {"cateTitle": item, data: [], index: idx}
 	    json.map( (cell) => {
 	    	if(cell.cateTitle == item){
 	    		docData[idx].data.push({
@@ -144,12 +144,14 @@ query.find().then(function (json) {
 	    			'image': cell.image,
 	    			'objectId': cell.objectId,
 	    			'createdAt': cell.createdAt,
-	    			'updatedAt': cell.updatedAt
+	    			'updatedAt': cell.updatedAt,
+            'index': cell.index
 	    		})
+          docData[idx].index = cell.index
 	    	}
 	    })     	
      })
-
+     console.log("docData", docData)
      if(!window.localStorage.getItem("docs_data"))window.response = docData
      window.localStorage.setItem("docs_data", JSON.stringify(docData))
   }).catch(function(error) {

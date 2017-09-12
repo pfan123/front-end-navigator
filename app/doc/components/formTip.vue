@@ -29,10 +29,18 @@
 
               <tr v-if="3 == formInfo.type">
                 <td>分类:</td>
-                <td><input type="text" v-model="formInfo.cateTitle" placeholder="请输入所属分类"></td>
+                <td class="admin_from_cate">
+                  <input type="text" v-model="formInfo.cateTitle" placeholder="请输入所属分类" @focus = "onFocus" @blur = "onBlur" @keyup = "onKeyup">
+                  <div class="admin_from_select" v-if="isSelect" @mouseover="onMouseover" @mouseout="onMouseout"> 
+                    <template v-for="cate in formInfo.cateArr">
+                      <span @click="setCate(cate)" :class = "{'on' : cate == formInfo.cateTitle}">{{cate}}</span>
+                    </template>
+                  </div>
+                </td>
+
               </tr>                             
             </table>
-            <input type="button" value="确定" @click="sendSubmit(formInfo.type, formInfo.objectId, formInfo.title, formInfo.detail, formInfo.link, formInfo.cateTitle, formInfo.originCateTitle, formInfo.cateArr, formInfo.totalData)">
+            <input type="button" value="确定" @click="sendSubmit(formInfo.type, formInfo.objectId, formInfo.title, formInfo.detail, formInfo.link, formInfo.cateTitle, formInfo.originCateTitle, formInfo.cateArr, formInfo.totalData, formInfo.cateInfo)">
         </div>  
     </template>
     <template v-else-if = "2 == formInfo.type">
@@ -42,22 +50,52 @@
             <table class="admin_from_table">      
               <tr>
                 <td>分类:</td>
-                <td><input type="text" v-model="formInfo.cateTitle" placeholder="请输入URL"></td>
+                <td class="admin_from_cate">
+                  <input type="text" v-model="formInfo.cateTitle" placeholder="请输入所属分类" @focus = "onFocus" @blur = "onBlur" @keyup = "onKeyup">
+                  <div class="admin_from_select" v-if="isSelect" @mouseover="onMouseover" @mouseout="onMouseout"> 
+                    <template v-for="cate in formInfo.cateArr">
+                      <span @click="setCate(cate)" :class = "{'on' : cate == formInfo.cateTitle}">{{cate}}</span>
+                    </template>
+                  </div>
+                </td>
               </tr>                             
             </table>
-            <input type="button" value="确定" @click="sendSubmit(formInfo.type, formInfo.objectId, formInfo.title, formInfo.detail, formInfo.link, formInfo.cateTitle, formInfo.originCateTitle, formInfo.cateArr, formInfo.totalData)">
+            <input type="button" value="确定" @click="sendSubmit(formInfo.type, formInfo.objectId, formInfo.title, formInfo.detail, formInfo.link, formInfo.cateTitle, formInfo.originCateTitle, formInfo.cateArr, formInfo.totalData, formInfo.cateInfo)">
         </div>
     </template>
+    <template v-else-if = "4 == formInfo.type">
+        <div class="admin_from_tmod admin_from-style3" >
+              <i class="admin_closebtn" @click="closeTip"></i>
+              <div class="admin_from_sort">
+                <table>
+                  <tr>
+                    <td>分类</td>
+                    <td>排序值</td>
+                  </tr>
+                  <template v-for="(item, idx) in cateInfo">
+                    <tr>
+                      <td>{{item.cateTitle}}</td>
+                      <td><input ref = "input" type="text" :value = "item.index" @change = "valueChange(item.index, formInfo.cateInfo, $event)"></td>
+                    </tr>
+                  </template>
+                </table>                
+              </div>
+              <input type="button" value="确定" @click="sendSubmit(formInfo.type, formInfo.objectId, formInfo.title, formInfo.detail, formInfo.link, formInfo.cateTitle, formInfo.originCateTitle, formInfo.cateArr, formInfo.totalData, formInfo.cateInfo)">
+        </div>
+    </template>
+
   </div>  
   </transition>
 </template>
 
 <script>
-import {checkType, sessionPosition, unqie, xss} from '../utils/util'
+import {checkType, sessionPosition, unqie, xss, isRepeat, isInteger} from '../utils/util'
 export default {
   data () {
     return {
-      isSucc: false
+      isSucc: false,
+      isSelect: false,
+      isBlur: true
     }
   },
   props: {
@@ -70,14 +108,48 @@ export default {
   },
 
   mounted () {
-  
+
+  },
+
+  computed: {
+    cateInfo () {
+      return this.formInfo.cateInfo
+    }
   },
 
   methods: {
     closeTip () {
       this.formInfo.isShow = false
     },
-    sendSubmit(type, id, title, detail, link, cateTitle, originCateTitle, cateArr, totalData){
+
+    onFocus () {
+      this.isSelect = true
+    },
+
+    onBlur (e) {
+      if(!this.isBlur)return
+      this.isSelect = false
+    },
+
+    onKeyup () {
+      this.formInfo.cateTitle == '' ? this.isSelect = true : this.isSelect = false
+    },
+
+    setCate (cate) {
+      this.isSelect = false
+      this.formInfo.cateTitle = cate
+      this.isBlur = true
+    },
+
+    onMouseover () {
+      this.isBlur = false
+    },
+
+    onMouseout () {
+      this.isBlur = true
+    },
+
+    sendSubmit(type, id, title, detail, link, cateTitle, originCateTitle, cateArr, totalData, cateInfo){
 
       //https://github.com/leizongmin/js-xss
       //xss预防转义<> ""
@@ -96,7 +168,6 @@ export default {
             alert("都是必填项，请认真填写");
           }else{
            self.isSucc = true
-         // console.log("objectId", id)
            let dataTypeDoc = AV.Object.createWithoutData('DataTypeDoc', id)
             // 修改属性
             dataTypeDoc.set('title', title)
@@ -126,22 +197,33 @@ export default {
           if( '' == cateTitle){
             alert("都是必填项，请认真填写");
           }else{
-            console.log("originCateTitle", originCateTitle)
-            console.log("cateTitle", cateTitle)
             self.isSucc = true
+            let originIdx, idx
+            cateInfo.map( item => {
+              if(item.cateTitle == originCateTitle){
+                originIdx = item.index
+              }else if(item.cateTitle == cateTitle){
+                idx = item.index
+              }
+            })            
             if(cateTitle != originCateTitle){
               if(cateArr.indexOf(cateTitle) != -1 ){
                 if(!confirm("您更改的分类名已经存在，确定要合并吗？")){
                   self.formInfo.isShow = false
-                  self.isSucc = false                  
+                  self.isSucc = false    
+                  console.log("取消")              
                   return;
                 }
+              }else{
+                idx = originIdx
               }
                let objects = []; // 构建一个本地的 AV.Object 对象数组
+
                totalData.map( (item) => {
                   if(item.cateTitle == originCateTitle){
-                    var dataTypeDoc = AV.Object.createWithoutData('DataTypeDoc', item.objectId);
+                    let dataTypeDoc = AV.Object.createWithoutData('DataTypeDoc', item.objectId);
                     dataTypeDoc.set('cateTitle', cateTitle)
+                    dataTypeDoc.set('index', idx)
                     objects.push(dataTypeDoc)
                   }
                })
@@ -158,7 +240,8 @@ export default {
                     "link": link,
                     "cateTitle": cateTitle,
                     "originCateTitle": originCateTitle,
-                    "cateArr": cateArr
+                    "cateArr": cateArr,
+                    "cateInfo": cateInfo
                   })                    
                   
                 }, function (error) {
@@ -186,6 +269,16 @@ export default {
           dataTypeDoc.set('detail', detail);
           dataTypeDoc.set("image", "");
           dataTypeDoc.set('link', link);
+          if(cateArr.indexOf(cateTitle) != -1 ){
+             cateInfo.map( item => {
+              if(item.cateTitle == cateTitle){
+                dataTypeDoc.set('index', item.index)
+              }
+             } )            
+          }else{
+            dataTypeDoc.set('index', cateArr.length)
+          }
+          
           dataTypeDoc.save().then(function (dataTypeDoc) {
             self.formInfo.isShow = false
             dataTypeDoc = JSON.parse(JSON.stringify(dataTypeDoc))
@@ -208,8 +301,66 @@ export default {
           })
         }
 
+      }else if(4 == self.formInfo.type){
+        let objects = []
+         totalData.map( (item) => {
+            this.formInfo.cateInfo.map( cell => {
+              if(item.cateTitle == cell.cateTitle && item.index != cell.index){
+                let dataTypeDoc = AV.Object.createWithoutData('DataTypeDoc', item.objectId)            
+                dataTypeDoc.set('index', Number(cell.index))
+                objects.push(dataTypeDoc)
+              }
+            })
+         })
+
+          AV.Object.saveAll(objects).then(function (objects) {
+            self.formInfo.isShow = false
+            self.isSucc = false
+            self.$emit('triggerUpdate', {
+              "type": type,
+              "objectId": dataTypeDoc.objectId,
+              "title": dataTypeDoc.title,
+              "detail": dataTypeDoc.detail,
+              "link": dataTypeDoc.link,
+              "image": dataTypeDoc.image,
+              "cateTitle": dataTypeDoc.cateTitle,
+              "originCateTitle": originCateTitle,
+              "cateArr": cateArr,
+              "cateInfo": self.formInfo.cateInfo
+            })                            
+          }, function (error) {
+            alert("数据保存失败，请重新提交")
+            self.isSucc = false    
+          })         
       }
 
+    },
+
+    valueChange(index, cateInfo, event){
+      let value = event.target.value.replace(/^\s+|\s+$/, '')
+      event.target.value = value
+      if(value === '' ){
+        alert("排序值填写不规范")
+        event.target.value = index
+      }else{
+        let arr = cateInfo.slice(0)
+        let id, newArr = [] 
+        arr.forEach( (item, aidx) => {
+            if(item.index == index){
+              arr[aidx].index = value
+              item.index = value
+              id = aidx
+            }
+            newArr.push(item.index)
+        })
+        if(isRepeat(newArr)){
+          alert("排序值有重复")
+          event.target.value = index
+          cateInfo.splice(id, 1, {"cateTitle": cateInfo[id].cateTitle, "index": index})
+        }else{
+          cateInfo.splice(id, 1, {"cateTitle": cateInfo[id].cateTitle, "index": value})
+        }
+      }
     } 
   },
 
@@ -253,6 +404,36 @@ export default {
     width: 440px;
     height: 210px;
   }  
+  &.admin_from-style3{
+    width: 440px;
+    height: 460px;
+    .admin_from_sort{
+      height: 378px;
+      overflow: auto;
+      margin-bottom: 12px;
+    }
+    table{
+      width: 365px;
+      margin: 0 auto;
+      >tr{
+        width: 365px;
+        &:nth-child(1){
+          font-size: 14px;
+          font-weight: bold;
+        }
+        input{
+          text-align: center;
+          width: 180px;
+        }
+        >td{
+          width: 180px !important;
+          text-align: center;
+          height: 32px;
+          line-height: 32px;
+        }        
+      }
+    }
+  }    
   .admin_closebtn{
     position: absolute;
     width: 30px;
@@ -321,6 +502,41 @@ export default {
     font-weight: bold;
     &:hover{
       opacity: .9;
+    }
+  }
+  .admin_from_cate{
+    position: relative;
+    .admin_from_select{
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 112px;
+      background: #fff;
+      outline: 0;
+      border: 1px solid #ed7a7c;
+      box-shadow: 0 0 8px rgba(228,57,60,0.3); 
+      box-sizing: border-box;
+      overflow-y: auto;  
+      border-radius: 2px;
+      span{
+        display: block;
+        height: 34px;
+        line-height: 34px;
+        text-align: left;
+        padding: 0 10px;
+        height: 36px;
+        font-size: 14px;
+        color: #333;
+        &:hover{
+          background: #ef3b42;
+          color: #fff;
+        }
+        &.on{
+          background: #ef3b42;
+          color: #fff;          
+        }
+      }   
     }
   }
 }

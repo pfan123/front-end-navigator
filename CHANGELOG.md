@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-08-04)
+# 1.1.0 (2017-08-17)
 
 
 ### Bug Fixes
@@ -19,6 +19,7 @@
 * **addDll:** 增加DllPlugin 与 DllReferencePlugin优化构建打包速度 ([061004e](https://github.com/pfan123/front-end-navigator/commit/061004e))
 * **bable:** add bable-polyfill and babel-preset-stage-2 ([69514cb](https://github.com/pfan123/front-end-navigator/commit/69514cb))
 * **commitValidate:** add husky and validate-commit-msg use as a githooks to validate the commit message ([5dbbf3e](https://github.com/pfan123/front-end-navigator/commit/5dbbf3e))
+* **docs:** add progressBar.vue ([41a8095](https://github.com/pfan123/front-end-navigator/commit/41a8095))
 * **happypack:** add happypack and UglifyJsParallelPlugin and babel-polyfill提高性能 ([afc2c98](https://github.com/pfan123/front-end-navigator/commit/afc2c98))
 * **modifyreadme:** add webpack in readme ([ea8b9b8](https://github.com/pfan123/front-end-navigator/commit/ea8b9b8))
 * **separation:** 分离VUE到页面script引入，减少打包大小 ([e1debb5](https://github.com/pfan123/front-end-navigator/commit/e1debb5))

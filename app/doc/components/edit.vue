@@ -1,6 +1,8 @@
 <template>
   <div class="admin_edit">
-     <header class="admin_edit_hd">前端导航平台--管理后台<a href="/" class="admin_go_index">回到首页</a><a href="javascript:;" class="admin_edit_add" @click="addItemData">添加</a></header>  
+    <div class="admin_edit_wp" >
+     <header class="admin_edit_hd" :class = "{'fixed': isFixed}">前端导航平台--管理后台<a href="javascript:;" class="admin_cate_sort" @click="cateSort">分类排序</a><a href="/" class="admin_go_index">回到首页</a><a href="javascript:;" class="admin_edit_add" @click="addItemData">添加</a></header>        
+    </div>
 
     <div class="admin_edit_item" v-for="item in list">
         <h3 v-cloak class="admin_cate-tit"><span>{{item.cateTitle}}</span> <a href="javascript:;" @click="editCateTitle(item.cateTitle, cateArr)">编辑</a><a href="javascript:;" @click="delCateTitle(item.cateTitle)">删除</a></h3>
@@ -15,25 +17,29 @@
           </template>
         </div>
     </div>
-    <form-tip :formInfo = "tipInfo" :foo ="bar" @triggerUpdate = "updataList"></form-tip>  
+    <form-tip :formInfo = "tipInfo"  @triggerUpdate = "updataList"></form-tip>  
+    <go-top v-on:goTop = "goTopback" :isTopShow = "isback"></go-top>
   </div>
 </template>
 
 <script>
-import {checkType, sessionPosition, unqie} from '../utils/util'
+import {checkType, sessionPosition, unqie, throttle} from '../utils/util'
 import formTip from "./formTip.vue"
+import goTop from "./goTop.vue"
 
 export default {
   data () {
     return {
+      isFixed: true,
       list: [],
       //type为1为修改分类标题，type为
-      tipInfo: {isShow: false, objectId: '', title: '', detail: '',link: '', cateTitle: '', type: '1', cateArr: [], originCateTitle: '', totalData: []},
-      bar: ''
+      tipInfo: {isShow: false, objectId: '', title: '', detail: '',link: '', cateTitle: '', type: '1', cateArr: [], originCateTitle: '', totalData: [], cateInfo: []},
+      isback: false
     }
   },
   components: {
-    "form-tip": formTip
+    "form-tip": formTip,
+    "go-top": goTop
   },
   created () {
     let self = this
@@ -66,7 +72,7 @@ export default {
     }
 
     let query = new AV.Query('DataTypeDoc')
-    query.ascending('createdAt')
+    query.ascending('index')
     query.limit(1000) 
     query.find().then(function (json) {
          json = JSON.parse( JSON.stringify(json, null, 4) )
@@ -78,9 +84,9 @@ export default {
          })
 
          self.cateArr = unqie(self.cateArr)
-         
+         self.cateInfo = []
          self.cateArr.map((item, idx) => {
-          docData[idx] = {"cateTitle": item, data: []}
+          docData[idx] = {"cateTitle": item, data: [], index: idx} 
           json.map( (cell) => {
             if(cell.cateTitle == item){
               docData[idx].data.push({
@@ -90,10 +96,13 @@ export default {
                 'image': cell.image,
                 'objectId': cell.objectId,
                 'createdAt': cell.createdAt,
-                'updatedAt': cell.updatedAt
+                'updatedAt': cell.updatedAt,
+                'index': cell.index
               })
+              docData[idx].index = cell.index
             }
-          })      
+          })  
+          self.cateInfo.push({"cateTitle": item, index: docData[idx].index})    
          })
 
          self.list = docData
@@ -105,10 +114,37 @@ export default {
   },
 
   mounted () {
+    let self = this
+    window.addEventListener("scroll", throttle(() => {
+      let scrollTop = document.body.scrollTop
+      if(scrollTop > 800){
+        self.isback = true
+      }else{
+        self.isback = false
+      }      
+    }, 300, false), false)
+  },  
 
-  },
+  methods: {    
+    goTopback (msg) {
+      let timer 
+      let dis 
+      let self = this
+      if(document.body.scrollTop !== 0){
+        dis = document.body.scrollTop / 20
 
-  methods: {
+        timer = setInterval( () =>{
+            if(document.body.scrollTop > 0){
+                document.body.scrollTop = document.body.scrollTop -dis
+            }else{
+                document.body.scrollTop = 0
+                clearInterval(timer)
+            }    
+        }, 1000/60)
+
+      }      
+    },
+
     getTotalData (){
       let self = this
       let arr = []
@@ -132,6 +168,7 @@ export default {
       this.tipInfo.cateArr = self.cateArr 
       this.tipInfo.type = 1
       this.tipInfo.totalData = this.totalData
+      this.tipInfo.cateInfo = this.cateInfo
     },
 
     updataList (data) {
@@ -179,6 +216,11 @@ export default {
                 self.cateArr.splice(index, 1)
               }
           } )
+          self.cateInfo.map( (item, index)=>{
+              if(item.cateTitle == data.originCateTitle){
+                self.cateInfo.splice(index, 1)
+              }
+          } )
         }
         self.getTotalData()
       //新增
@@ -207,9 +249,14 @@ export default {
                   "image": data.image                
               }]
             })
+            self.cateInfo.push({"cateTitle": data.cateTitle, index: self.cateArr.length})
             self.cateArr.push(data.cateTitle)
+            
           }    
           self.getTotalData()    
+      }else if(4 == data.type){
+        self.cateInfo = data.cateInfo
+        console.log("self.cateInfo", self.cateInfo)
       }
 
     },
@@ -225,6 +272,7 @@ export default {
       this.tipInfo.cateArr = cateArr 
       this.tipInfo.totalData = this.totalData 
       this.tipInfo.type = 2    
+      this.tipInfo.cateInfo = this.cateInfo
     },
 
     addItemData () {
@@ -235,9 +283,10 @@ export default {
       this.tipInfo.isShow = true 
       this.tipInfo.cateTitle = ''
       this.tipInfo.originCateTitle = '' 
-      this.tipInfo.cateArr = self.cateArr 
+      this.tipInfo.cateArr = this.cateArr 
       this.tipInfo.type = 3
       this.tipInfo.totalData = this.totalData
+      this.tipInfo.cateInfo = this.cateInfo
     },
 
     delCateTitle(cateTitle) {
@@ -294,6 +343,22 @@ export default {
           alert("数据删除失败，请重新操作")
         })      
       }
+    },
+
+    cateSort(){
+      this.tipInfo.objectId = '' 
+      this.tipInfo.title = '' 
+      this.tipInfo.detail = '' 
+      this.tipInfo.link = '' 
+      this.tipInfo.isShow = true 
+      this.tipInfo.cateTitle = ''
+      this.tipInfo.originCateTitle = '' 
+      this.tipInfo.cateArr = this.cateArr 
+      this.tipInfo.type = 4
+      this.tipInfo.totalData = this.totalData
+      this.tipInfo.cateInfo = this.cateInfo
+      console.log("this.cateInfo", this.cateInfo)
+
     }
   },
 
@@ -309,6 +374,13 @@ export default {
 
 <style lang="scss">
 @import "../sass/pc.scss";
+html,body{
+  height: auto;
+}
+.admin_edit_wp{
+  position: relative;
+  height: 60px;  
+}
 .admin_edit_hd{
   height: 60px;  
   line-height: 60px;  
@@ -319,6 +391,13 @@ export default {
   font-weight: bold;
   margin-bottom: 20px;
   position: relative;
+  &.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+  }
   a{
     position: absolute;
     bottom:0;
@@ -333,6 +412,9 @@ export default {
     color: #fff;
     &:hover{
       opacity: .8;
+    }
+    &.admin_cate_sort{
+      right: 190px;
     }
     &.admin_go_index{
       right: 100px;
