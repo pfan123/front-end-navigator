@@ -192,22 +192,26 @@ new HappyPack({
 vue.common.js 与 vue.runtime.js 区别
 
 - 独立构建包括编译和支持 template 选项。 它也依赖于浏览器的接口的存在，所以你不能使用它来为服务器端渲染。
-      <div id="app">
-      	<banner></banner>
-      	<contain></contain>
-      </div>
+
+  ```
+  <div id="app">
+  	<banner></banner>
+  	<contain></contain>
+  </div>
+  ```
+
 - 运行时构建不包括模板编译，不支持 template 选项。运行时构建，可以用 render 选项，但它只在单文件组件中起作用，因为单文件组件的模板是在构建时预编译到 render 函数中，运行时构建只有独立构建大小的 30%，只有 16Kb min+gzip 大小。
 
-    <div id="app">
-    </div>
-    import APP from './app.vue'
-    new Vue({
-      render: (createElement) => {
-        return createElement(APP)
-      }
-    }).$mount('#app')
-
-
+```
+<div id="app">
+</div>
+import APP from './app.vue'
+new Vue({
+  render: (createElement) => {
+    return createElement(APP)
+  }
+}).$mount('#app')
+```
 
 
 [基于webpack Code Splitting实现react组件的按需加载](https://zhuanlan.zhihu.com/p/26228500)
