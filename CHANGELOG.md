@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * **conflict:** 修复合并引起的冲突 ([c46b88c](https://github.com/pfan123/front-end-navigator/commit/c46b88c))
+* **fe:** modify readme ([920f758](https://github.com/pfan123/front-end-navigator/commit/920f758))
 * **fe:** modify readme ([9aab2c5](https://github.com/pfan123/front-end-navigator/commit/9aab2c5))
 * **modify:** modify readme.md ([2606e7d](https://github.com/pfan123/front-end-navigator/commit/2606e7d))
 * **modify:** modify webpack.dev.config.js webpack.prod.config.js readme.md ([0e01f24](https://github.com/pfan123/front-end-navigator/commit/0e01f24))

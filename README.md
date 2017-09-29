@@ -64,6 +64,25 @@
 - 前端面试资料
 - 前端导航平台
 
+## 使用方式
+
+1.拉取仓库
+
+```
+git clone git@github.com:o2team/wxapp-market.git
+```
+
+2.执行命令
+
+```
+npm run base  //启动 webpack-dev-server  执行 webpack.config.js
+npm run dev  //启动 webpack-dev-server  执行 webpack.dev.config.js
+npm run prod  //启动 webpack-dev-server  执行 webpack.dev.prod.js
+npm run start //执行 node app.js 
+```
+
+
+
 ## 技术实践文章
 
 [webpack简介与使用](./webpack简介与使用.md)
