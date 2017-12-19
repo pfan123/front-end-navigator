@@ -241,6 +241,8 @@ new Vue({
 
 [Bable polyfill](https://babeljs.io/docs/usage/polyfill/)
 
+[Babel polyfill 知多少](https://zhuanlan.zhihu.com/p/29058936)
+
 [Babel 用户手册](https://github.com/thejameskyle/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md)
 
 ## License
