@@ -1,5 +1,5 @@
 <a name="1.1.0"></a>
-# 1.1.0 (2017-09-29)
+# 1.1.0 (2017-12-19)
 
 
 ### Bug Fixes
@@ -14,6 +14,7 @@
 * **modifywebpack:** understand commonChunk and extract-text problem ([a0251ee](https://github.com/pfan123/front-end-navigator/commit/a0251ee))
 * **readme:** modify readme ([c71390f](https://github.com/pfan123/front-end-navigator/commit/c71390f))
 * **readme:** modify readme makedown ([592147d](https://github.com/pfan123/front-end-navigator/commit/592147d))
+* **transform-runtime:** add  babel plugin ([572d7ce](https://github.com/pfan123/front-end-navigator/commit/572d7ce))
 
 
 ### Features
