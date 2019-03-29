@@ -1,6 +1,7 @@
 //https://segmentfault.com/a/1190000004883199  为 Koa 框架封装 webpack-dev-middleware 中间件
 
 const Koa = require('koa')
+const serve = require('koa-static')
 const app = new Koa()
 
 const webpack = require('webpack')
@@ -37,12 +38,14 @@ const webpackConfig = process.env.NODE_ENV === 'production'
   : require('./webpack.dev.config.js')
 const compiler = webpack(webpackConfig)
 
+app.use(serve('./dist/'));
+
 app.use(koaHistory())
 
 //https://github.com/webpack/webpack-dev-middleware
 app.use(devMiddleware(compiler, {
     // display no info to console (only warnings and errors)
-    noInfo: true,
+    noInfo: false,
 
     // display nothing to the console
     quiet: false,
@@ -75,31 +78,31 @@ app.use(hotMiddleware(compiler, {
 }))
 
 
-const render = page => {
-	return new Promise( (resolve, reject) => {
-	    let viewUrl = `./view/${page}`
-	    fs.readFile(viewUrl, "binary", ( err, data ) => {
-	      if ( err ) {
-	        reject( err )
-	      } else {
-	        resolve( data )
-	      }
-	    })		
-	})
-}
+// const render = page => {
+// 	return new Promise( (resolve, reject) => {
+// 	    let viewUrl = `./view/${page}`
+// 	    fs.readFile(viewUrl, "binary", ( err, data ) => {
+// 	      if ( err ) {
+// 	        reject( err )
+// 	      } else {
+// 	        resolve( data )
+// 	      }
+// 	    })		
+// 	})
+// }
 
-const defineRoute = async( url ) => {
-	let view = '404.html'
-	switch (url) {
-	    case '/':
-	      view = 'index.html'
-	      break
-	    case '/index':
-	      view = 'index.html'
-	      break		      
-	}
-	return await render( view )
-}
+// const defineRoute = async( url ) => {
+// 	let view = '404.html'
+// 	switch (url) {
+// 	    case '/':
+// 	      view = 'index.html'
+// 	      break
+// 	    case '/index':
+// 	      view = 'index.html'
+// 	      break		      
+// 	}
+// 	return await render( view )
+// }
 
 app.listen(port, () => {
 	console.log("the server is starting at port " + port)

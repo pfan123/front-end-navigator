@@ -110,7 +110,7 @@ module.exports = {
                       {
                           "loader": "css-loader",
                           "options": {
-          
+                              "minimize": false,
                               "sourceMap": false
                           }
                       }
@@ -120,7 +120,7 @@ module.exports = {
                       {
                           "loader": "css-loader",
                           "options": {
-          
+                              "minimize": false,
                               "sourceMap": false
                           }
                       }
@@ -130,7 +130,7 @@ module.exports = {
                       {
                           "loader": "css-loader",
                           "options": {
-          
+                              "minimize": false,
                               "sourceMap": false
                           }
                       },
@@ -146,7 +146,7 @@ module.exports = {
                       {
                           "loader": "css-loader",
                           "options": {
-          
+                              "minimize": false,
                               "sourceMap": false
                           }
                       },
@@ -163,7 +163,7 @@ module.exports = {
                       {
                           "loader": "css-loader",
                           "options": {
-          
+                              "minimize": false,
                               "sourceMap": false
                           }
                       },
@@ -210,6 +210,7 @@ module.exports = {
           {
               "loader": "css-loader",
               "options": {
+                  "minimize": false,
                   "sourceMap": false
               }
           },
@@ -316,7 +317,8 @@ module.exports = {
         threadPool: happyThreadPool,
         cache: true,
         verbose: true        
-      })    
+      }),    
+
       // new webpack.optimize.CommonsChunkPlugin({
       //     name: 'manifest' //But since there are no more common modules between them we end up with just the runtime code included in the manifest file
       // }),

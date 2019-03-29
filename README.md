@@ -75,10 +75,10 @@ git clone git@github.com:o2team/wxapp-market.git
 2.执行命令
 
 ```
-npm run base  //启动 webpack-dev-server  执行 webpack.config.js
-npm run dev  //启动 webpack-dev-server  执行 webpack.dev.config.js
-npm run prod  //启动 webpack-dev-server  执行 webpack.dev.prod.js
-npm run start //执行 node app.js 
+yarn run app  //启动 webpack-dev-server  执行 webpack.config.js
+yarn run dev  //启动 webpack-dev-server  执行 webpack.dev.config.js
+yarn run prod  //启动 webpack-dev-server  执行 webpack.dev.prod.js
+npm run analyzer //执行 analyzer
 ```
 
 
