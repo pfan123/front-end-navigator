@@ -1,9 +1,9 @@
-<a name="1.1.0"></a>
-# 1.1.0 (2017-12-19)
+# 1.1.0 (2019-03-29)
 
 
 ### Bug Fixes
 
+* 修复预览问题 ([ef94d88](https://github.com/pfan123/front-end-navigator/commit/ef94d88))
 * **conflict:** 修复合并引起的冲突 ([c46b88c](https://github.com/pfan123/front-end-navigator/commit/c46b88c))
 * **fe:** modify readme ([920f758](https://github.com/pfan123/front-end-navigator/commit/920f758))
 * **fe:** modify readme ([9aab2c5](https://github.com/pfan123/front-end-navigator/commit/9aab2c5))
@@ -19,6 +19,7 @@
 
 ### Features
 
+*  更新依赖，css-loader 去掉 options 中 minimize 参数，需要压缩可使用[mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin) ([56b60d1](https://github.com/pfan123/front-end-navigator/commit/56b60d1))
 * **add:** 增加webpack-bundle-analyzer分析bundle，vue2.0 路由懒加载 ([e3d9ab2](https://github.com/pfan123/front-end-navigator/commit/e3d9ab2))
 * **addDll:** 增加DllPlugin 与 DllReferencePlugin优化构建打包速度 ([061004e](https://github.com/pfan123/front-end-navigator/commit/061004e))
 * **bable:** add bable-polyfill and babel-preset-stage-2 ([69514cb](https://github.com/pfan123/front-end-navigator/commit/69514cb))
