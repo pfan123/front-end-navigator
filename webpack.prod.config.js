@@ -177,9 +177,6 @@ module.exports = {
       {
         test: /\.html$/,
         loader: 'html-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        },
         include: [
           APP_PATH
         ]

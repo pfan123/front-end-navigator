@@ -19,7 +19,7 @@
         <floating :isFloatingShow = "isFloatingShow"></floating> 
         <go-top v-on:goTop="goTopback" :isTopShow = "isback"></go-top> 
         <div class="footer">
-          <div class="copyright">©2015 - 2019 pFan. All Rights Reserved. 粤ICP备15014690号</div>
+          <div class="copyright">©2015 - 2019 pFan. All Rights Reserved. <a href='http://www.beian.miit.gov.cn' target="_blank">粤ICP备15014690号</a></div>
         </div>
         
     </div>   
