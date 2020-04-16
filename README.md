@@ -80,8 +80,7 @@ yarn run dev  //启动 webpack-dev-server  执行 webpack.dev.config.js
 yarn run prod  //启动 webpack-dev-server  执行 webpack.dev.prod.js
 npm run analyzer //执行 analyzer
 ```
-
-
+![img](http://img.pfan123.com/vue_mvvm.jpg)
 
 ## 技术实践文章
 
