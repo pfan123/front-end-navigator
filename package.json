@@ -57,7 +57,7 @@
     "koa-webpack-middleware": "^1.0.5",
     "leancloud-storage": "^2.3.0",
     "mockjs": "^1.0.1-beta3",
-    "node-sass": "^4.5.2",
+    "node-sass": "^7.0.0",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^2.0.5",
     "sass-loader": "^6.0.3",
